@@ -14,5 +14,25 @@ public class libraryController {
         model.addAttribute("name", "Главная страница"); // "title" передаётся в шаблон и в нём, при обращении, вывыдется "Главная старница"
         return "main";
     }
-
+    @GetMapping("/") // указываем наш юрл адрес, делаем на главную страничку
+    // пока работаем с боллее простой версией
+    // вызываем html шаблон home
+    public String root(@RequestParam(name="title", required=false, defaultValue="User") String name, Model model) {
+        model.addAttribute("name", "Главная страница"); // "title" передаётся в шаблон и в нём, при обращении, вывыдется "Главная старница"
+        return "index";
+    }
+    @GetMapping("/book") // указываем наш юрл адрес, делаем на главную страничку
+    // пока работаем с боллее простой версией
+    // вызываем html шаблон home
+    public String book(@RequestParam(name="title", required=false, defaultValue="User") String name, Model model) {
+        model.addAttribute("name", "Главная страница"); // "title" передаётся в шаблон и в нём, при обращении, вывыдется "Главная старница"
+        return "book_template";
+    }
+    @GetMapping("/user") // указываем наш юрл адрес, делаем на главную страничку
+    // пока работаем с боллее простой версией
+    // вызываем html шаблон home
+    public String user(@RequestParam(name="title", required=false, defaultValue="User") String name, Model model) {
+        model.addAttribute("name", "Главная страница"); // "title" передаётся в шаблон и в нём, при обращении, вывыдется "Главная старница"
+        return "user_template";
+    }
 }

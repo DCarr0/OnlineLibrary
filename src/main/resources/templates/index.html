@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -11,29 +11,7 @@
 
 <body>
     <section class="content">
-        <header>
-            <section>
-                <div>
-                    <ul>
-                        <li>
-                            <a href="#">
-                                <h1>Главная</h1>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <h1>Случайная книга</h1>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <h1>Личный кабинет</h1>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </section>
-        </header>
+        <header th:insert="../templates/blocks/header :: header"></header>
         <main>
             <section>
                 <div class="main_left">
@@ -60,20 +38,7 @@
             </section>
         </main>
     </section>
-    <footer>
-        <section>
-            <div>
-                <ul>
-                    <li>
-                        <p>all rights reserved</p>
-                    </li>
-                    <li>
-                        <p>GoldenHogsCompany</p>
-                    </li>
-                </ul>
-            </div>
-        </section>
-    </footer>
+    <footer th:insert="../templates/blocks/footer :: footer"></footer>
 </body>
 
 </html>
