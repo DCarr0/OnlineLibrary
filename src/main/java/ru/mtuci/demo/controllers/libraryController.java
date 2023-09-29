@@ -14,4 +14,5 @@ public class libraryController {
         model.addAttribute("name", "Главная страница"); // "title" передаётся в шаблон и в нём, при обращении, вывыдется "Главная старница"
         return "main";
     }
+
 }
