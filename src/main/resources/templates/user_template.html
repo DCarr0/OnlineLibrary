@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <section class="content">
+        <header th:insert="../templates/blocks/header :: header"></header>
+        <main>
+            <section>
+                <div class="user_info">
+                    <p>_LOGIN_</p>
+                    <div class="lasts_books">
+                        <p>Последние книги</p>
+                        <ul>
+                            <li>
+                                _book1_
+                            </li>
+                            <li>
+                                _book2_
+                            </li>
+                            <li>
+                                _book3_
+                            </li>
+                            <li>
+                                _book4_
+                            </li>
+                            <li>
+                                _book5_
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="main_right">
+                    <img src="img/book3.png" alt="Oops.." height="835px" width="415px">
+                </div>
+            </section>
+        </main>
+    </section>
+    <footer th:insert="../templates/blocks/footer :: footer"></footer>
+</body>
+
+</html>

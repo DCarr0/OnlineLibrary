@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <section class="content">
+        <header th:insert="../templates/blocks/header :: header"></header>
+        <main>
+            <section>
+                <div class="book_info">
+                    <div class="description">
+                    <p>_NAME_</p>
+                    <a href="#"><p>Источник</p></a>
+                    <p>_DESCRIPTION_</p>
+                    <div class="comments">
+                        <p>Комментарии</p>
+                        <ul>
+                            <li>
+                                _com1_
+                            </li>
+                            <li>
+                                _com2_
+                            </li>
+                            <li>
+                                _com3_
+                            </li>
+                            <li>
+                                _com4_
+                            </li>
+                            <li>
+                                _com5_
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                    </div>
+                <div class="main_right">
+                    <img src="img/book3.png" alt="Oops.." height="835px" width="415px">
+                </div>
+            </section>
+        </main>
+    </section>
+    <footer th:insert="../templates/blocks/footer :: footer"></footer>
+</body>
+
+</html>
