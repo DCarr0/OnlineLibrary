@@ -39,18 +39,19 @@ public class libraryController {
     // пока работаем с боллее простой версией
     // вызываем html шаблон main
     public String main(@RequestParam(name="title", required=false, defaultValue="User") String name, Model model) {
-//      model.addAttribute("name", "Главная страница"); // "title" передаётся в шаблон и в нём, при обращении, вывыдется "Главная старница"
-        Iterable<Publication> publications = publicationRepository.findAll();
-        model.addAttribute("publications",publications);
+        model.addAttribute("name", "Главная страница"); // "title" передаётся в шаблон и в нём, при обращении, вывыдется "Главная старница"
+//        Iterable<Publication> publications = publicationRepository.findAll();
+//        model.addAttribute("publications",publications);
         return "main";
     }
-    @GetMapping("/") // указываем наш юрл адрес, делаем на главную страничку
-    // пока работаем с боллее простой версией
-    // вызываем html шаблон home
-    public String root(@RequestParam(name="title", required=false, defaultValue="User") String name, Model model) {
-        model.addAttribute("name", "Главная страница"); // "title" передаётся в шаблон и в нём, при обращении, вывыдется "Главная старница"
-        return "index";
-    }
+
+//    @GetMapping("/") // указываем наш юрл адрес, делаем на главную страничку
+//    // пока работаем с боллее простой версией
+//    // вызываем html шаблон home
+//    public String root(@RequestParam(name="title", required=false, defaultValue="User") String name, Model model) {
+//        model.addAttribute("name", "Главная страница"); // "title" передаётся в шаблон и в нём, при обращении, вывыдется "Главная старница"
+//        return "index";
+//    }
     @GetMapping("/book") // указываем наш юрл адрес, делаем на главную страничку
     // пока работаем с боллее простой версией
     // вызываем html шаблон home
