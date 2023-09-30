@@ -11,7 +11,27 @@
 
 <body>
     <section class="content">
-        <header th:insert="../templates/blocks/header :: header"></header>
+        <header><section>
+            <div>
+                <ul>
+                    <li>
+                        <a href="/main">
+                            <h1>Главная</h1>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/book">
+                            <h1>Случайная книга</h1>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/user">
+                            <h1>Личный кабинет</h1>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </section></header>
         <main>
             <section>
                 <div class="main_left">
@@ -38,7 +58,18 @@
             </section>
         </main>
     </section>
-    <footer th:insert="../templates/blocks/footer :: footer"></footer>
+    <footer><section>
+        <div>
+            <ul>
+                <li>
+                    <p>all rights reserved</p>
+                </li>
+                <li>
+                    <p>GoldenHogsCompany</p>
+                </li>
+            </ul>
+        </div>
+    </section></footer>
 </body>
 
 </html>
