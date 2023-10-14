@@ -1,34 +1,34 @@
 package ru.mtuci.demo.models;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 
 @Entity
+@Table(name = "publications")
 public class Publication {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)//При добавлении новой записи позволяет генерировать каждый раз новое значение.
-    private Long id;
+    private UUID id;
 
     private String title;
     private String genre;
-    private Long publisherId;
-    private Date date;
+    private UUID publisherId;
+    private LocalDateTime date;
     private Boolean ban;
 
     private String link;
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -48,19 +48,19 @@ public class Publication {
         this.genre = genre;
     }
 
-    public Long getPublisherId() {
+    public UUID getPublisherId() {
         return publisherId;
     }
 
-    public void setPublisherId(Long publisherId) {
+    public void setPublisherId(UUID publisherId) {
         this.publisherId = publisherId;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 

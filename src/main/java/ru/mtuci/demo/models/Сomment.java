@@ -2,22 +2,19 @@ package ru.mtuci.demo.models;
 
 import jakarta.persistence.*;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "users")
-public class User {
-
+@Table(name = "comments")
+public class Сomment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)//При добавлении новой записи позволяет генерировать каждый раз новое значение.
-    private UUID id;
 
-    private String name;
-    private String password;
-    private String email;
-    private Boolean requestToRedactor;
+    private UUID id;
+    private String commentary;
+    private UUID publicationId;
+    private UUID publisherId;
     private LocalDateTime date;
     private Boolean ban;
 
@@ -29,36 +26,28 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getCommentary() {
+        return commentary;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCommentary(String commentary) {
+        this.commentary = commentary;
     }
 
-    public String getPassword() {
-        return password;
+    public UUID getPublicationId() {
+        return publicationId;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPublicationId(UUID publicationId) {
+        this.publicationId = publicationId;
     }
 
-    public String getEmail() {
-        return email;
+    public UUID getPublisherId() {
+        return publisherId;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Boolean getRequestToRedactor() {
-        return requestToRedactor;
-    }
-
-    public void setRequestToRedactor(Boolean requestToRedactor) {
-        this.requestToRedactor = requestToRedactor;
+    public void setPublisherId(UUID publisherId) {
+        this.publisherId = publisherId;
     }
 
     public LocalDateTime getDate() {
@@ -77,3 +66,4 @@ public class User {
         this.ban = ban;
     }
 }
+

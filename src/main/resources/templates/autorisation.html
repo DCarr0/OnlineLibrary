@@ -10,6 +10,7 @@
 
 <h1>Привет, это авторизация!</h1>
 
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 <footer th:insert="blocks/footer :: footer"></footer>
 </body>
 </html>
