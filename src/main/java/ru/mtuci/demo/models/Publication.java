@@ -3,7 +3,6 @@ package ru.mtuci.demo.models;
 
 import jakarta.persistence.*;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -15,7 +14,6 @@ public class Publication {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)//При добавлении новой записи позволяет генерировать каждый раз новое значение.
     private UUID id;
-
     private String title;
     private String genre;
     private UUID publisherId;
