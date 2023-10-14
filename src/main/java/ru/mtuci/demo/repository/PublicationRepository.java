@@ -1,9 +1,10 @@
 package ru.mtuci.demo.repository;
 
-import org.springframework.data.repository.CrudRepository; //Встроенный интерфейс, которые имеет все функции: добавить, обновить, удалить и тд
+import org.springframework.data.jpa.repository.JpaRepository;
 import ru.mtuci.demo.models.Publication;
+
 import java.rmi.server.UID;
 
 
-public interface PublicationRepository extends CrudRepository<Publication, UID>{
+public interface PublicationRepository extends JpaRepository<Publication, UID> {
 }
