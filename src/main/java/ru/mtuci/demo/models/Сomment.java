@@ -14,7 +14,7 @@ public class Сomment {
     private UUID id;
     private String commentary;
     private UUID publicationId;
-    private UUID publisherId;
+    private String publisherName;
     private LocalDateTime date;
     private Boolean ban;
 
@@ -42,12 +42,12 @@ public class Сomment {
         this.publicationId = publicationId;
     }
 
-    public UUID getPublisherId() {
-        return publisherId;
+    public String getPublisherName() {
+        return publisherName;
     }
 
-    public void setPublisherId(UUID publisherId) {
-        this.publisherId = publisherId;
+    public void setPublisherName(String publisherName) {
+        this.publisherName = publisherName;
     }
 
     public LocalDateTime getDate() {

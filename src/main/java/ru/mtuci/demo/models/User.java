@@ -21,7 +21,6 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)//При добавлении новой записи позволяет генерировать каждый раз новое значение.
     private UUID id;
-
     private String name;
     private String password;
     private String email;

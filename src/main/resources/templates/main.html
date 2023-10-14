@@ -11,33 +11,32 @@
 <section class="content">
     <header th:insert="../templates/blocks/header :: header"></header>
     <main>
-
-        <!--    <div th:each="el : ${publications}"></div>-->
-        <!--    <h3 th:text="${el.title}"></h3>-->
-        <!--    <p th:text="${el.genre}"></p>-->
-
         <section>
             <div class="main_left">
                 <div class="text_area_div">
                 <textarea name="search" id="" cols="1" rows="1" class="text_area_1"></textarea><button type="submit" class="but">Поиск</button>
                 </div>
                 <div class="main_left_content">
-                    <div>
-                        <h1>Каталог</h1>
+                    <h1>Каталог</h1>
+                    <div th:each="el : ${publications}">
                         <ul>
-                            <li>_BOOK10_</li>
-                            <li>_BOOK11_</li>
-                            <li>_BOOK12_</li>
+                            <li>
+                                <h3 th:text = "${el.title}"/>
+                                <p th:text = "${el.genre}"/>
+                                <a href="'/blog/' + ${el.id}">Посмотреть публикацию детальнее</a>
+                            </li>
                         </ul>
                     </div>
-                    <div>
-                        <h1>Последнее</h1>
-                        <ul>
-                            <li>_BOOK1_</li>
-                            <li>_BOOK2_</li>
-                            <li>_BOOK3_</li>
-                        </ul>
-                    </div>
+<!--                </div>-->
+<!--                    <div>-->
+<!--                        <h1>Последнее</h1>-->
+<!--                        <ul>-->
+<!--                            <li>_BOOK1_</li>-->
+<!--                            <li>_BOOK2_</li>-->
+<!--                            <li>_BOOK3_</li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+<!--                </div>-->
                 </div>
             </div>
             <div class="main_right">

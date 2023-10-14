@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Document</title>
+</head>
+<section class="content">
+  <header th:insert="../templates/blocks/header :: header"></header>
+  <main>
+    <section>
+      <div>
+        <h1>Добавление книги в общую библиотеку</h1>
+        <form action="/book/add" method="post">
+          <input type="text" name="title" placeholder="Введите название публикации" >
+          <input type="text" name="genre" placeholder="Введите жанр публикации" >
+          <input type="text" name="link" placeholder="Введите ссылку на источник публикации">
+          <button type="submit">Добавить публикации</button>
+        </form>
+      </div>
+      <div class="main_right">
+        <img src="img/book3.png" alt="Oops.." height="835px" width="415px">
+      </div>
+    </section>
+  </main>
+</section>
+<footer th:insert="../templates/blocks/footer :: footer"></footer>
+</body>
+
+</html>

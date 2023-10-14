@@ -16,7 +16,7 @@ public class Publication {
     private UUID id;
     private String title;
     private String genre;
-    private UUID publisherId;
+    private String publisherName;
     private LocalDateTime date;
     private Boolean ban;
 
@@ -46,12 +46,12 @@ public class Publication {
         this.genre = genre;
     }
 
-    public UUID getPublisherId() {
-        return publisherId;
+    public String getPublisherName() {
+        return publisherName;
     }
 
-    public void setPublisherId(UUID publisherId) {
-        this.publisherId = publisherId;
+    public void setPublisherName(String publisherName) {
+        this.publisherName = publisherName;
     }
 
     public LocalDateTime getDate() {
@@ -75,6 +75,14 @@ public class Publication {
     }
 
     public void setLink(String link) {
+        this.link = link;
+    }
+
+    public Publication() {}
+
+    public Publication(String title, String genre, String link) {
+        this.title = title;
+        this.genre = genre;
         this.link = link;
     }
 }

@@ -12,6 +12,7 @@ import static java.util.stream.Collectors.toSet;
 @AllArgsConstructor
 public enum UserRole {
     USER(Set.of(Permission.READ)),
+    MODERATOR(Set.of(Permission.READ,Permission.MODIFICATION)),
     ADMIN(Set.of(Permission.READ, Permission.MODIFICATION));
 
     private final Set<Permission> permissions;
