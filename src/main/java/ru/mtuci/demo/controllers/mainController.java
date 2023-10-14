@@ -11,19 +11,15 @@ public class mainController {
 
 
 
-    @GetMapping("/autorisation") // указываем наш юрл адрес, делаем на главную страничку
-    // пока работаем с боллее простой версией
-    // вызываем html шаблон home
+    @GetMapping("/autorisation")
     public String autorisation(@RequestParam(name="title", required=false, defaultValue="User") String name, Model model) {
-        model.addAttribute("name", "Главная страница"); // "title" передаётся в шаблон и в нём, при обращении, вывыдется "Главная старница"
+        model.addAttribute("name", "Главная страница");
         return "autorisation";
     }
 
-    @GetMapping("/registration") // указываем наш юрл адрес, делаем на главную страничку
-    // пока работаем с боллее простой версией
-    // вызываем html шаблон home
+    @GetMapping("/registration")
     public String registration(@RequestParam(name="title", required=false, defaultValue="User") String name, Model model) {
-        model.addAttribute("name", "Главная страница"); // "title" передаётся в шаблон и в нём, при обращении, вывыдется "Главная старница"
+        model.addAttribute("name", "Главная страница");
         return "registration";
     }
 
