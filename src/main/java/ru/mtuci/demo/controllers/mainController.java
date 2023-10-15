@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class mainController {
 
 
-
     @GetMapping("/autorisation")
     public String autorisation(@RequestParam(name="title", required=false, defaultValue="User") String name, Model model) {
         model.addAttribute("name", "Главная страница");

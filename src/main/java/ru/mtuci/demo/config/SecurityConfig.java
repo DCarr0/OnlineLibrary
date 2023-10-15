@@ -26,8 +26,11 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.csrf((csrf) -> csrf
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
-                .authorizeHttpRequests((auth) ->auth
-
+                //.authorizeHttpRequests((auth) ->auth
+                .authorizeHttpRequests((requests) -> requests
+                                .requestMatchers("/registration", "/autorisation").permitAll()
+                                .anyRequest().authenticated()
+                )
 //                .requestMatchers("/main").hasAnyRole("User","Admin")
 //                        .requestMatchers("/main").hasAnyRole("User","Admin")
 //                        .requestMatchers("/main").hasRole("Admin")
@@ -35,11 +38,9 @@ public class SecurityConfig {
 //                        .requestMatchers("/main").hasRole("Admin")
 //                        .anyRequest().authenticated())
 //                .formLogin(Customizer.withDefaults());
-                                .anyRequest().authenticated()
-                )
-                .formLogin(form -> form
-                        .loginPage("/registration").permitAll()
-                        .defaultSuccessUrl("/main", true))
+                //.formLogin(form -> form
+                //        .loginPage("/registration").permitAll()
+                //        .defaultSuccessUrl("/main", true))
                 .formLogin(form -> form
                         .loginPage("/autorisation").permitAll()
                         .defaultSuccessUrl("/main", true))
