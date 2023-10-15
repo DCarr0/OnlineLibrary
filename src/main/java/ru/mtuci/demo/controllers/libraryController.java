@@ -98,7 +98,8 @@ public class libraryController {
 
     @GetMapping("/user")
     public String user(@RequestParam(name="title", required=false, defaultValue="User") String name, Model model) {
-        model.addAttribute("name", "Главная страница");
+//        Optional<User> user = UserRepository.findById(id);
+//        model.addAttribute("user",user);
         return "user_template";
     }
 }
