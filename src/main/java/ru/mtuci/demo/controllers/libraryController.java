@@ -14,10 +14,6 @@ import ru.mtuci.demo.models.Publication;
 import ru.mtuci.demo.repository.PublicationRepository;
 import ru.mtuci.demo.service.PublicationService;
 
-import java.rmi.server.UID;
-import java.util.ArrayList;
-import java.util.Optional;
-
 @Controller
 public class libraryController {
 
@@ -52,22 +48,16 @@ public class libraryController {
         model.addAttribute("publications",publications);
         return "main";
     }
-
+    @GetMapping("/book_template")
+    public String book_template(@RequestParam(name="title", required=false, defaultValue="User") String name, Model model) {
+        Iterable<Publication> publications = publicationRepository.findAll();
+        model.addAttribute("publications",publications);
+        return "main";
+    }
     @GetMapping("/book")
     public String book(@RequestParam(name="title", required=false, defaultValue="User") String name, Model model) {
         return "book_template";
     }
-
-    @GetMapping("/book/details")
-    public String bookDetails(@RequestParam(name="id", required=false, defaultValue="User") UID id, Model model) {
-        if (!publicationRepository.existsById(id)){return "redirect:/main";}
-        Optional<Publication> publication = publicationRepository.findById(id);
-        ArrayList<Publication> array = new ArrayList<>();
-        publication.ifPresent(array::add);
-        model.addAttribute("publication",publication);
-        return "book_details";
-    }
-
 
     @GetMapping("/book/add")
     public String bookAdd(@RequestParam(name="title", required=false, defaultValue="User") String name, Model model) {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -23,7 +23,7 @@
                             <li>
                                 <h3 th:text = "${el.title}"/>
                                 <p th:text = "${el.genre}"/>
-                                <a href="'/book/details' + ${el.id}">Посмотреть публикацию детальнее</a>
+                                <a href="book_details/${el.id}$">Посмотреть публикацию детальнее</a>
                             </li>
                         </ul>
                     </div>
