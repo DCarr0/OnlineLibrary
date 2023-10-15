@@ -38,6 +38,9 @@ public class SecurityConfig {
                                 .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
+                        .loginPage("/registration").permitAll()
+                        .defaultSuccessUrl("/main", true))
+                .formLogin(form -> form
                         .loginPage("/autorisation").permitAll()
                         .defaultSuccessUrl("/main", true))
                 .logout(form -> form
