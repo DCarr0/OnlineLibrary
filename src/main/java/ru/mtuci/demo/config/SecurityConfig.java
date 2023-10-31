@@ -19,7 +19,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-
     private final UserDetailsService userDetailsService;
 
     @Bean
@@ -28,7 +27,7 @@ public class SecurityConfig {
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
                 //.authorizeHttpRequests((auth) ->auth
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/registration", "/autorisation").permitAll()
+                        .requestMatchers("/registration", "/autorisation, /book/**").permitAll()
                         .anyRequest().authenticated()
                 )
 //                .requestMatchers("/main").hasAnyRole("User","Admin")

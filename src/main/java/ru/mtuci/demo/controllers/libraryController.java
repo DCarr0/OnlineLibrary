@@ -14,9 +14,9 @@ import ru.mtuci.demo.models.Publication;
 import ru.mtuci.demo.repository.PublicationRepository;
 import ru.mtuci.demo.service.PublicationService;
 
-import java.rmi.server.UID;
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.UUID;
 
 @Controller
 public class libraryController {
@@ -63,7 +63,7 @@ public class libraryController {
         return "book_template";
     }
     @GetMapping("/book/details")
-    public String bookDetails(@RequestParam(name="id", required=false, defaultValue="User") UID id, Model model) {
+    public String bookDetails(@RequestParam(name="id", required=false, defaultValue="User") UUID     id, Model model) {
         if (!publicationRepository.existsById(id)){return "redirect:/main";}
         Optional<Publication> publication = publicationRepository.findById(id);
         ArrayList<Publication> array = new ArrayList<>();
@@ -73,12 +73,14 @@ public class libraryController {
     }
 
     @GetMapping("/book/add")
+
     public String bookAdd(@RequestParam(name="title", required=false, defaultValue="User") String name, Model model) {
         return "book_add";
     }
 
     private PublicationService publicationService;
     @PostMapping("/book/add")
+    //@PreAuthorize("hasAuthority('modification')")
     public ResponseEntity<PublicationDto> addPublication(@RequestBody PublicationDto publicationDto){
         PublicationDto savedPublication = publicationService.addPublication(publicationDto);
 
