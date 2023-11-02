@@ -1,20 +1,16 @@
 package ru.mtuci.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.mtuci.demo.details.PublicationDto;
 import ru.mtuci.demo.models.Publication;
 import ru.mtuci.demo.repository.PublicationRepository;
-import ru.mtuci.demo.service.PublicationService;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -66,9 +62,10 @@ public class libraryController {
     public String bookDetails(@RequestParam(name="id", required=false, defaultValue="User") UUID     id, Model model) {
         if (!publicationRepository.existsById(id)){return "redirect:/main";}
         Optional<Publication> publication = publicationRepository.findById(id);
-        ArrayList<Publication> array = new ArrayList<>();
-        publication.ifPresent(array::add);
-        model.addAttribute("publication",publication);
+//        ArrayList<Publication> array = new ArrayList<>();
+//        publication.ifPresent(array::add);
+        model.addAttribute("publication", publication);
+        //model.addAttribute("publication", PublicationService.findOne(id).orElse(null));
         return "book_details";
     }
 
@@ -78,25 +75,28 @@ public class libraryController {
         return "book_add";
     }
 
-    private PublicationService publicationService;
-    @PostMapping("/book/add")
-    //@PreAuthorize("hasAuthority('modification')")
-    public ResponseEntity<PublicationDto> addPublication(@RequestBody PublicationDto publicationDto){
-        PublicationDto savedPublication = publicationService.addPublication(publicationDto);
-
-        return new ResponseEntity<>(savedPublication, HttpStatus.CREATED);
-    }
-
-
+//    private PublicationService publicationService;
 //    @PostMapping("/book/add")
-//    public String bookPostAdd(@RequestParam(name="title", required=false, defaultValue="User") String title,
-//                              @RequestParam(name="genre", required=false, defaultValue="User") String genre,
-//                              @RequestParam(name="link", required=false, defaultValue="User") String link,
-//                              Model model){
-//        Publication publication = new Publication(title,genre,link);
-//        PublicationRepository.save(publication);
-//        return "redirect:/blog";
+//    //@PreAuthorize("hasAuthority('modification')")
+//    public ResponseEntity<PublicationDto> addPublication(@RequestBody PublicationDto publicationDto){
+//        PublicationDto savedPublication = publicationService.addPublication(publicationDto);
+//
+//        return new ResponseEntity<>(savedPublication, HttpStatus.CREATED);
 //    }
+
+    @PostMapping("/book/add")
+    @PreAuthorize("hasAuthority('modification')")
+    public String bookPostAdd(@RequestParam(name="title", required=false, defaultValue="User") String title,
+                              @RequestParam(name="genre", required=false, defaultValue="User") String genre,
+                              @RequestParam(name="publisherName", required=false, defaultValue="User") String publisherName,
+                              @RequestParam(name="date", required=false, defaultValue="User") LocalDateTime date,
+                              @RequestParam(name="ban", required=false, defaultValue="User") Boolean ban,
+                              @RequestParam(name="link", required=false, defaultValue="User") String link,
+                              Model model){
+        Publication publication = new Publication(title,genre,publisherName,date,ban,link);
+        publicationRepository.save(publication);
+        return "redirect:/main";
+    }
 
     @GetMapping("/user")
     public String user(@RequestParam(name="title", required=false, defaultValue="User") String name, Model model) {

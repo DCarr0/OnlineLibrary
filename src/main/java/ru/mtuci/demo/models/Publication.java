@@ -78,11 +78,17 @@ public class Publication {
         this.link = link;
     }
 
-    public Publication() {}
+    public Publication() {
+        super();
+    }
 
-    public Publication(String title, String genre, String link) {
+    public Publication(String title, String genre, String publisherName, LocalDateTime date, Boolean ban, String link) {
+        super();
         this.title = title;
         this.genre = genre;
+        this.publisherName = publisherName;
+        this.date = date;
+        this.ban = ban;
         this.link = link;
     }
 }

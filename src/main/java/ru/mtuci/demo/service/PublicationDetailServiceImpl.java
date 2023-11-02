@@ -6,11 +6,19 @@ import ru.mtuci.demo.details.PublicationDto;
 import ru.mtuci.demo.models.Publication;
 import ru.mtuci.demo.repository.PublicationRepository;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Service
 @AllArgsConstructor
 public class PublicationDetailServiceImpl implements PublicationService {
 
     private PublicationRepository publicationRepository;
+
+    @Override
+    public Optional<Publication> findOne(UUID id){
+        return publicationRepository.findById(id);
+    }
 
     @Override
     public PublicationDto addPublication(PublicationDto publicationDto){

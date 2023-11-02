@@ -16,40 +16,35 @@
 <section class="content">
     <body>
         <header th:insert="blocks/header :: header"></header>
-
         <main>
+            <div class="auth_div">
+                <h1 class="">Register a new account</h1>
 
-            <div class="register-box">
-                <div class="card">
-                    <div class="card-body register-card-body">
-                        <p class="login-box-msg">Register a new account</p>
-
-                        <form action="#" th:action="@{/registration}" th:object="${userData}" method="post">
-                            <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
-                                <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
-                            </div>
-
-                            <div>
-                                <input type="text" class="form-control"  th:field="*{name}" placeholder="Name" th:errorclass="is-invalid">
-                            </div>
-
-                            <div>
-                                <input type="email" class="form-control" th:field="*{email}" placeholder="Email" th:errorclass="is-invalid">
-                            </div>
-
-                            <div>
-                                <input type="password" class="form-control" th:field="*{password}" placeholder="Password" th:errorclass="is-invalid">
-                            </div>
-
-                            <div>
-                                <p><b>Хотите ли вы подать заявка на редактора?</b></p>
-                                <p><input name="yes" type="radio" value="1" th:field="*{requestToRedactor}"> Да, я хочу быть редактором.</p>
-                                <p><input name="no" type="radio" value="0" th:field="*{requestToRedactor}"> Нет.</p>
-                            </div>
-                            <div><input type="submit" value="Sign In"/></div>
-                        </form>
+                <form action="/registration" th:action="@{/registration}" th:object="${userData}" method="post">
+                    <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+                        <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
                     </div>
-                </div>
+
+                    <div>
+                        <input type="text" class="auth_textarea"  th:field="*{name}" placeholder="Name" th:errorclass="is-invalid">
+                    </div>
+
+                    <div>
+                        <input type="email" class="auth_textarea" th:field="*{email}" placeholder="Email" th:errorclass="is-invalid">
+                    </div>
+
+                    <div>
+                        <input type="password" class="auth_textarea" th:field="*{password}" placeholder="Password" th:errorclass="is-invalid">
+                    </div>
+
+                    <div>
+                        <p><b>Хотите ли вы подать заявка на редактора?</b></p>
+                        <p><input name="yes" type="radio" value="1" class="" th:field="*{requestToRedactor}"> Да, я хочу быть редактором.
+                            <input name="no" type="radio" value="0" class="" checked th:field="*{requestToRedactor}"> Нет.</p>
+                    </div>
+
+                    <div><input type="submit" class="auth_button" value="Sign In"/></div>
+                </form>
             </div>
         </main>
 
