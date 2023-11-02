@@ -3,17 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Registration</title>
+
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="js/validatr.js" type="text/javascript"></script>
+
+    <script>
+    jQuery(function ($) {
+        $('form').validatr();
+    });
+    </script>
 </head>
 <section class="content">
     <body>
         <header th:insert="blocks/header :: header"></header>
 
         <main>
-            <p>вводит в форму имя, почту, пароль, заявку на редактора</p>
-            <p>также вычисляется дата регистрации, выдаётся индетификатор бана 0, задаётся айдишник</p>
-
-            <p>я думаю в юзере_темп надо сделать логаут будет, да и придумать чо там вообще писаться будет</p>
-
 
             <div class="register-box">
                 <div class="card">
@@ -38,14 +42,10 @@
                             </div>
 
                             <div>
-                                <input type="password" class="form-control" placeholder="Retype password">
+                                <p><b>Хотите ли вы подать заявка на редактора?</b></p>
+                                <p><input name="yes" type="radio" value="1" th:field="*{requestToRedactor}"> Да, я хочу быть редактором.</p>
+                                <p><input name="no" type="radio" value="0" th:field="*{requestToRedactor}"> Нет.</p>
                             </div>
-
-<!--                            <div>-->
-<!--                                <p><b>Хотите ли вы подать заявка на редактора?</b></p>-->
-<!--                                <p><input name="yes" type="radio" value="Да" th:field="*{requestToRedactor}"> Да, я хочу быть редактором.</p>-->
-<!--                                <p><input name="no" type="radio" value="Нет" th:field="*{requestToRedactor}"> Нет.</p>-->
-<!--                            </div>-->
                             <div><input type="submit" value="Sign In"/></div>
                         </form>
                     </div>

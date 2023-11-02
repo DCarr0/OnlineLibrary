@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,14 +21,11 @@ public class UserData implements Serializable {
     @NotEmpty(message = "Password can not be empty")
     private String password;
 
-//    @NotEmpty(message = "Request to redactor can not be empty")
-//    private Boolean requestToRedactor;
-//
-//    @NotEmpty
-//    private LocalDateTime date;
-//
-//    @NotEmpty
-//    private Boolean ban;
+    private Boolean requestToRedactor;
+
+    private LocalDateTime date = LocalDateTime.now();
+
+    private Boolean ban = Boolean.FALSE;
 
     public String getName() {
         return name;
@@ -53,27 +51,27 @@ public class UserData implements Serializable {
         this.password = password;
     }
 
-//    public Boolean getRequestToRedactor() {
-//        return requestToRedactor;
-//    }
-//
-//    public void setRequestToRedactor(Boolean requestToRedactor) {
-//        this.requestToRedactor = requestToRedactor;
-//    }
-//
-//    public LocalDateTime getDate() {
-//        return date;
-//    }
-//
-//    public void setDate(LocalDateTime date) {
-//        this.date = date;
-//    }
-//
-//    public Boolean getBan() {
-//        return ban;
-//    }
-//
-//    public void setBan(Boolean ban) {
-//        this.ban = ban;
-//    }
+    public Boolean getRequestToRedactor() {
+        return requestToRedactor;
+    }
+
+    public void setRequestToRedactor(Boolean requestToRedactor) {
+        this.requestToRedactor = requestToRedactor;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    public Boolean getBan() {
+        return ban;
+    }
+
+    public void setBan(Boolean ban) {
+        this.ban = ban;
+    }
 }
