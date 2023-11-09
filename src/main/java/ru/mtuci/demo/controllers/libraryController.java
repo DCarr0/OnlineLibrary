@@ -11,7 +11,6 @@ import ru.mtuci.demo.models.Publication;
 import ru.mtuci.demo.repository.PublicationRepository;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.UUID;
 
 @Controller
@@ -60,8 +59,8 @@ public class libraryController {
     }
     @GetMapping("/book/details")
     public String bookDetails(@RequestParam(name="id", required=false, defaultValue="User") UUID     id, Model model) {
-        if (!publicationRepository.existsById(id)){return "redirect:/main";}
-        Optional<Publication> publication = publicationRepository.findById(id);
+        if (!publicationRepository.existsById(id)){return "redirect:/main";}//редирект на хтмл с ошибкой для этого
+        Publication publication = publicationRepository.findById(id).orElseThrow();
 //        ArrayList<Publication> array = new ArrayList<>();
 //        publication.ifPresent(array::add);
         model.addAttribute("publication", publication);
