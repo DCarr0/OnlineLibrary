@@ -2,6 +2,7 @@ package ru.mtuci.demo.models;
 
 
 import jakarta.persistence.*;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -9,6 +10,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "publications")
+@ToString
 public class Publication {
 
     @Id

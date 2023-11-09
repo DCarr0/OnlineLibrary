@@ -59,9 +59,9 @@ public class libraryController {
         return "book_template";
     }
     @GetMapping("/book/details")
-    public String bookDetails(@RequestParam(name="id", required=false, defaultValue="User") UUID     id, Model model) {
+    public String bookDetails(@RequestParam(name="id", required=false, defaultValue="User") UUID id, Model model) {
         if (!publicationRepository.existsById(id)){return "redirect:/main";}
-        Optional<Publication> publication = publicationRepository.findById(id);
+        Publication publication = publicationRepository.findById(id).orElseThrow();
 //        ArrayList<Publication> array = new ArrayList<>();
 //        publication.ifPresent(array::add);
         model.addAttribute("publication", publication);
