@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.mtuci.demo.exceptions.UserAlreadyExistException;
 import ru.mtuci.demo.models.UserData;
-import ru.mtuci.demo.repository.UserRepository;
 import ru.mtuci.demo.service.UserRegistrationService;
 
 
@@ -23,9 +22,6 @@ public class mainController {
         model.addAttribute("name", "Главная страница");
         return "autorisation";
     }
-
-    @Autowired
-    private UserRepository userRepository;
 
     @Autowired
     private UserRegistrationService userRegistrationService;
@@ -51,10 +47,5 @@ public class mainController {
         }
         return "redirect:/main";
     }
-
-//    @PostMapping("/registration")
-//    public String registration(@RequestBody User user) {
-//        registraionService.saveUser(user);
-//        return "registration";
 
 }

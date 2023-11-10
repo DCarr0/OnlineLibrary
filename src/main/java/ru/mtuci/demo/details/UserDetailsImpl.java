@@ -43,7 +43,7 @@ public class UserDetailsImpl implements UserDetails {
                 .map(role -> role.getName().grantedAuthority())
                 .flatMap(Set::stream)
                 .toList();
-        return new org.springframework.security.core.userdetails.User(user.getEmail(),
+        return new org.springframework.security.core.userdetails.User(user.getName(),
                 user.getPassword(),
                 true,
                 true,

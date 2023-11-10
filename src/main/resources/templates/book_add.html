@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
-  <title>Document</title>
+  <title>Adding a book</title>
 </head>
 <section class="content">
   <header th:insert="../templates/blocks/header :: header"></header>
@@ -18,9 +18,9 @@
           <div class="book_add_h1">
             <h1>Добавление книги в общую библиотеку</h1>
           </div>
-          <input type="text" name="title" placeholder="Введите название публикации" class="book_add_form_textarea">
-          <input type="text" name="genre" placeholder="Введите жанр публикации" class="book_add_form_textarea">
-          <input type="text" name="link" placeholder="Введите ссылку на источник публикации" class="book_add_form_textarea">
+          <input type="text" name="title" placeholder="Введите название публикации" class="book_add_form_textarea" required>
+          <input type="text" name="genre" placeholder="Введите жанр публикации" class="book_add_form_textarea" required>
+          <input type="url" name="link" placeholder="Введите ссылку на источник публикации: https://example.com" class="book_add_form_textarea" pattern="https://.*" size="30" value="https://" required>
           <button type="submit" class="book_add_button">Добавить публикации</button>
         </form>
       </div>

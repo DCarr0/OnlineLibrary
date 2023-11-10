@@ -1,25 +1,18 @@
 package ru.mtuci.demo.controllers;
 
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.mtuci.demo.exceptions.UserAlreadyExistException;
 import ru.mtuci.demo.models.Publication;
-import ru.mtuci.demo.models.UserData;
 import ru.mtuci.demo.repository.PublicationRepository;
-import ru.mtuci.demo.repository.UserRepository;
-import ru.mtuci.demo.service.UserDetailsServiceImpl;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.UUID;
 
 @Controller
@@ -100,9 +93,8 @@ public class libraryController {
                               ){
 
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = user.getUsername();
 
-        Publication publication = new Publication(title,genre,username,LocalDateTime.now(),false,link);
+        Publication publication = new Publication(title,genre,user.getUsername(),LocalDateTime.now(),false,link);
         publicationRepository.save(publication);
         return "redirect:/main";
     }

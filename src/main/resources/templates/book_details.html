@@ -20,7 +20,7 @@
                                 <p th:text = "${el.genre}"/>
                                 <p th:text = "${el.publisherName}"/>
                                 <p th:text = "${el.date}"/>
-                                <p th:text = "${el.link}"/>
+                                <p><a th:href ="${el.link}">Ссылка на источник</a></p>
                                 <a href="'/book/details' + ${el.id} + '/redact'">Редактировать</a>
                                 <a href="'/book/details' + ${el.id} + '/remove'">Удалить</a>
                             </li>
