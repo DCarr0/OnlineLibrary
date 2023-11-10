@@ -39,8 +39,8 @@
 
                     <div>
                         <p><b>Хотите ли вы подать заявка на редактора?</b></p>
-                        <p><input name="yes" type="radio" value="1" class="" th:field="*{requestToRedactor}"> Да, я хочу быть редактором.
-                            <input name="no" type="radio" value="0" class="" checked th:field="*{requestToRedactor}"> Нет.</p>
+                        <fieldset ><input name="yes" type="radio" value="1" class="" th:field="*{requestToRedactor}"> Да, я хочу быть редактором.
+                            <input name="no" type="radio" value="0" class="" th:checked="checked" th:field="*{requestToRedactor}"> Нет.</fieldset >
                     </div>
 
                     <div><input type="submit" class="auth_button" value="Зарегистрироваться"/></div>

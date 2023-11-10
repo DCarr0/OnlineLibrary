@@ -32,6 +32,7 @@ public class UserRegistrationService implements UserService {
         BeanUtils.copyProperties(user, User);
         encodePassword(User, user);
         userRepository.save(User);
+//связь с ролью
     }
 
 
