@@ -1,14 +1,22 @@
 package ru.mtuci.demo.controllers;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.mtuci.demo.exceptions.UserAlreadyExistException;
 import ru.mtuci.demo.models.Publication;
+import ru.mtuci.demo.models.UserData;
 import ru.mtuci.demo.repository.PublicationRepository;
+import ru.mtuci.demo.repository.UserRepository;
+import ru.mtuci.demo.service.UserDetailsServiceImpl;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -86,14 +94,15 @@ public class libraryController {
 
     @PostMapping("/book/add")
     @PreAuthorize("hasAuthority('modification')")
-    public String bookPostAdd(@RequestParam(name="title", required=false, defaultValue="User") String title,
-                              @RequestParam(name="genre", required=false, defaultValue="User") String genre,
-                              @RequestParam(name="publisherName", required=false, defaultValue="User") String publisherName,
-                              @RequestParam(name="date", required=false, defaultValue="User") LocalDateTime date,
-                              @RequestParam(name="ban", required=false, defaultValue="User") Boolean ban,
-                              @RequestParam(name="link", required=false, defaultValue="User") String link,
-                              Model model){
-        Publication publication = new Publication(title,genre,publisherName,date,ban,link);
+    public String bookPostAdd(@RequestParam(name="title", required=false) String title,
+                              @RequestParam(name="genre", required=false) String genre,
+                              @RequestParam(name="link", required=false) String link
+                              ){
+
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = user.getUsername();
+
+        Publication publication = new Publication(title,genre,username,LocalDateTime.now(),false,link);
         publicationRepository.save(publication);
         return "redirect:/main";
     }

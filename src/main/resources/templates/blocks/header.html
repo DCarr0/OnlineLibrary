@@ -23,6 +23,13 @@
                                 <h1>Личный кабинет</h1>
                             </a>
                         </li>
+                        <li>
+                            <div>
+                                <form th:action="@{/logout}" method="post">
+                                  <input type="submit" value="Выйти из аккаунта" class="logout"/>
+                                </form>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </section>

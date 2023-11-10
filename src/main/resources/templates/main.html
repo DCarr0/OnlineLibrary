@@ -23,7 +23,7 @@
                             <li>
                                 <h3 th:text = "${el.title}"/>
                                 <p th:text = "${el.genre}"/>
-                                <a th:href ="@{/book/details?id=${el.id}}">Посмотреть публикацию детальнее</a>
+                                <a th:href ="@{/book/details?(id=${el.id})}">Посмотреть публикацию детальнее</a>
                             </li>
                         </ul>
                     </div>
@@ -40,12 +40,21 @@
                 </div>
             </div>
             <div class="main_right">
-                <img src="img/book3.png" alt="Oops.." height="835px" width="415px">
             </div>
         </section>
     </main>
 </section>
 <footer th:insert="../templates/blocks/footer :: footer"></footer>
 </body>
-
+<style>
+    .content{
+        height: 100%;
+    }
+    .main_right{
+        display: block;
+        width: 415px;
+        min-height: 100%;
+        background-image: url("img/book3.png");
+    }
+</style>
 </html>
