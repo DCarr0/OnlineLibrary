@@ -4,14 +4,6 @@
     <meta charset="UTF-8">
     <title>Registration</title>
 
-    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-    <script src="js/validatr.js" type="text/javascript"></script>
-
-    <script>
-    jQuery(function ($) {
-        $('form').validatr();
-    });
-    </script>
 </head>
 <section class="content">
     <body>
@@ -26,21 +18,23 @@
                     </div>
 
                     <div>
-                        <input type="text" class="auth_textarea"  th:field="*{name}" placeholder="Name" th:errorclass="is-invalid">
+                        <input type="text" class="auth_textarea"  th:field="*{name}" placeholder="Name" th:errorclass="is-invalid" required>
                     </div>
 
                     <div>
-                        <input type="email" class="auth_textarea" th:field="*{email}" placeholder="Email" th:errorclass="is-invalid">
+                        <input type="email" class="auth_textarea" th:field="*{email}" placeholder="Email" th:errorclass="is-invalid" required>
                     </div>
 
                     <div>
-                        <input type="password" class="auth_textarea" th:field="*{password}" placeholder="Password" th:errorclass="is-invalid">
+                        <input type="password" class="auth_textarea" th:field="*{password}" placeholder="Password" th:errorclass="is-invalid" required>
                     </div>
 
                     <div>
                         <p><b>Хотите ли вы подать заявку на редактора?</b></p>
-                        <fieldset ><input name="yes" type="radio" value="1" class="" th:field="*{requestToRedactor}"> Да, я хочу быть редактором.
-                            <input name="no" type="radio" value="0" class="" th:checked th:field="*{requestToRedactor}"> Нет.</fieldset >
+                        <fieldset>
+                            <input name="yes" type="radio" value="true" class="" th:field="*{requestToRedactor}"> Да, я хочу быть редактором.
+                            <input name="no" type="radio" value="false" class="" th:field="*{requestToRedactor}"> Нет.
+                        </fieldset >
                     </div>
 
                     <div><input type="submit" class="auth_button" value="Зарегистрироваться"/></div>
