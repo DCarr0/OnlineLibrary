@@ -19,7 +19,6 @@ public class mainController {
 
     @GetMapping("/autorisation")
     public String autorisation(@RequestParam(name="title", required=false, defaultValue="User") String name, Model model) {
-        model.addAttribute("name", "Главная страница");
         return "autorisation";
     }
 
@@ -47,5 +46,4 @@ public class mainController {
         }
         return "redirect:/main";
     }
-
 }

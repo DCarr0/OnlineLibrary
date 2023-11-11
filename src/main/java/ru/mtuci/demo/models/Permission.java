@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum Permission {
     READ("read"),
-//    CREATE("create"),
+    DELETE("delete"),
     MODIFICATION("modification");
 
     private final String permission;

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.mtuci.demo.models.Publication;
 import ru.mtuci.demo.repository.PublicationRepository;
+import ru.mtuci.demo.repository.UserRepository;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -49,29 +50,26 @@ public class libraryController {
         model.addAttribute("publications",publications);
         return "main";
     }
-    @GetMapping("/book_template")
-    public String book_template(@RequestParam(name="title", required=false, defaultValue="User") String name, Model model) {
-        Iterable<Publication> publications = publicationRepository.findAll();
-        model.addAttribute("publications",publications);
-        return "main";
+
+    private UserRepository userRepository;
+
+    @GetMapping("/")
+    public String IdUser(@RequestParam(name="title", required=false, defaultValue="User")String name, Model model) {
+        Iterable<ru.mtuci.demo.models.User> user = userRepository.findAll();
+        model.addAttribute("user",user);
+        return "block/header";
     }
-    @GetMapping("/book")
-    public String book(@RequestParam(name="title", required=false, defaultValue="User") String name, Model model) {
-        return "book_template";
-    }
+
     @GetMapping("/book/details")
     public String bookDetails(@RequestParam(name="id", required=false, defaultValue="User") UUID id, Model model) {
         if (!publicationRepository.existsById(id)){return "redirect:/main";}
         Publication publication = publicationRepository.findById(id).orElseThrow();
-//        ArrayList<Publication> array = new ArrayList<>();
-//        publication.ifPresent(array::add);
         model.addAttribute("publication", publication);
         //model.addAttribute("publication", PublicationService.findOne(id).orElse(null));
         return "book_details";
     }
 
     @GetMapping("/book/add")
-
     public String bookAdd(@RequestParam(name="title", required=false, defaultValue="User") String name, Model model) {
         return "book_add";
     }
@@ -89,18 +87,22 @@ public class libraryController {
     @PreAuthorize("hasAuthority('modification')")
     public String bookPostAdd(@RequestParam(name="title", required=false) String title,
                               @RequestParam(name="genre", required=false) String genre,
-                              @RequestParam(name="link", required=false) String link
+                              @RequestParam(name="link", required=false) String link,
+                              @RequestParam(name="description", required=false) String description
                               ){
 
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        Publication publication = new Publication(title,genre,user.getUsername(),LocalDateTime.now(),false,link);
+        Publication publication = new Publication(title,genre,user.getUsername(),LocalDateTime.now(),false,link,description);
         publicationRepository.save(publication);
         return "redirect:/main";
     }
 
     @GetMapping("/user")
-    public String user(@RequestParam(name="title", required=false, defaultValue="User") String name, Model model) {
+    public String user(@RequestParam(name="id", required=false, defaultValue="User") UUID id, Model model) {
+        if (!userRepository.existsById(id)){return "redirect:/main";}//хорошо бы сделать редирект на логаут
+        ru.mtuci.demo.models.User user = userRepository.findById(id).orElseThrow();
+        model.addAttribute("user", user);
 //        Optional<User> user = UserRepository.findById(id);
 //        model.addAttribute("user",user);
         return "user_template";

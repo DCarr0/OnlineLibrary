@@ -13,7 +13,7 @@ import static java.util.stream.Collectors.toSet;
 public enum UserRole {
     USER(Set.of(Permission.READ)),
     MODERATOR(Set.of(Permission.READ,Permission.MODIFICATION)),
-    ADMIN(Set.of(Permission.READ, Permission.MODIFICATION));
+    ADMIN(Set.of(Permission.READ, Permission.MODIFICATION, Permission.DELETE));
 
     private final Set<Permission> permissions;
 

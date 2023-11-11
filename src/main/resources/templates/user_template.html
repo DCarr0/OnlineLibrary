@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <title>Personal account</title>
 </head>
 
 <body>
@@ -15,7 +15,16 @@
         <main>
             <section>
                 <div class="user_info">
-                    <p>_LOGIN_</p>
+                    <div th:each="el : ${user}">
+                        <ul>
+                            <li>
+                                <h3 th:text = "${el.name}" />
+                                <p th:text = "${el.email}"/>
+                                <p th:text = "${el.date}"/>
+                                <p th:text = "${el.roles}"/>
+                            </li>
+                        </ul>
+                    </div>
                     <div class="lasts_books">
                         <p>Последние книги</p>
                         <ul>

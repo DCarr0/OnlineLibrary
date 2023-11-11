@@ -21,6 +21,7 @@
           <input type="text" name="title" placeholder="Введите название публикации" class="book_add_form_textarea" required>
           <input type="text" name="genre" placeholder="Введите жанр публикации" class="book_add_form_textarea" required>
           <input type="url" name="link" placeholder="Введите ссылку на источник публикации: https://example.com" class="book_add_form_textarea" pattern="https://.*" size="30" value="https://" required>
+          <textarea name="description" placeholder="Введите описание книги" class="book_add_form_textarea_description" minlength="100" maxlength="255" required></textarea>
           <button type="submit" class="book_add_button">Добавить публикации</button>
         </form>
       </div>
@@ -143,6 +144,15 @@ main {
   display: block;
   margin: 0 auto;
   height: 22px;
+  width: 600px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.book_add_form_textarea_description{
+  resize: none;
+  display: block;
+  margin: 0 auto;
+  height: 80px;
   width: 600px;
   margin-top: 5px;
   margin-bottom: 5px;

@@ -1,6 +1,5 @@
 package ru.mtuci.demo.details;
 
-import jdk.jshell.Snippet;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -18,5 +17,6 @@ public class PublicationDto {
     private String link;
     private LocalDateTime requestTime;
     private String publisherName;
+    private String description;
 
 }

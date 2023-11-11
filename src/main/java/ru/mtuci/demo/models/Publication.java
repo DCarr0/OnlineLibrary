@@ -21,8 +21,17 @@ public class Publication {
     private String publisherName;
     private LocalDateTime date;
     private Boolean ban;
-
     private String link;
+
+    private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public UUID getId() {
         return id;
@@ -84,7 +93,7 @@ public class Publication {
         super();
     }
 
-    public Publication(String title, String genre, String publisherName, LocalDateTime date, Boolean ban, String link) {
+    public Publication(String title, String genre, String publisherName, LocalDateTime date, Boolean ban, String link, String description) {
         super();
         this.title = title;
         this.genre = genre;
@@ -92,5 +101,6 @@ public class Publication {
         this.date = date;
         this.ban = ban;
         this.link = link;
+        this.description = description;
     }
 }

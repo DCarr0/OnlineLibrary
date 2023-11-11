@@ -28,6 +28,7 @@ public class PublicationDetailServiceImpl implements PublicationService {
         publication.setLink(publicationDto.getLink());
         publication.setDate(publicationDto.getRequestTime());
         publication.setPublisherName(publicationDto.getPublisherName());
+        publication.setDescription(publicationDto.getDescription());
 
         Publication savedPublication = publicationRepository.save(publication);
 
@@ -38,6 +39,7 @@ public class PublicationDetailServiceImpl implements PublicationService {
         savedPublicationDto.setLink(savedPublication.getLink());
         savedPublicationDto.setRequestTime(savedPublication.getDate());
         savedPublicationDto.setPublisherName(savedPublication.getPublisherName());
+        savedPublicationDto.setDescription(savedPublication.getDescription());
 
         return savedPublicationDto;
     }

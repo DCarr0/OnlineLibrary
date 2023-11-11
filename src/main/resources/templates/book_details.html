@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Publication description</title>
 </head>
 <section class="content">
     <header th:insert="../templates/blocks/header :: header"></header>
@@ -21,6 +21,7 @@
                                 <p th:text = "${el.publisherName}"/>
                                 <p th:text = "${el.date}"/>
                                 <p><a th:href ="${el.link}">Ссылка на источник</a></p>
+                                <div><p th:text = "${el.description}"/></div>
                                 <a href="'/book/details' + ${el.id} + '/redact'">Редактировать</a>
                                 <a href="'/book/details' + ${el.id} + '/remove'">Удалить</a>
                             </li>
@@ -240,13 +241,13 @@ footer section {
     margin:  0 auto;
 }
 footer ul {
-    width: 400px;
+    width: 100%;
     display: flex;
     justify-content: space-around;
     list-style: none;
 }
 .footer_div {
-    width: 100%;
+    width: 400px;
     margin-left: auto;
     margin-right: 0em;
 
