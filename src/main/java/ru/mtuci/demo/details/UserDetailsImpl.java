@@ -11,7 +11,6 @@ import java.util.Set;
 
 @Data
 @AllArgsConstructor
-
 public class UserDetailsImpl implements UserDetails {
     private final String username;
     private final String password;
@@ -20,22 +19,22 @@ public class UserDetailsImpl implements UserDetails {
 
    @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return isActive;
     }
 
     public static UserDetails fromApplicationUser(User user) {
@@ -43,12 +42,9 @@ public class UserDetailsImpl implements UserDetails {
                 .map(role -> role.getName().grantedAuthority())
                 .flatMap(Set::stream)
                 .toList();
-        return new org.springframework.security.core.userdetails.User(user.getName(),
+        return new UserDetailsImpl (user.getName(),
                 user.getPassword(),
-                true,
-                true,
-                true,
-                true,
-                authorities);
+                authorities,
+                !user.getBan());
     }
 }

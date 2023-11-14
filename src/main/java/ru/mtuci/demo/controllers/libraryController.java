@@ -3,7 +3,7 @@ package ru.mtuci.demo.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,42 +22,12 @@ public class libraryController {
     @Autowired
     private PublicationRepository publicationRepository;
 
-
-//    @PostMapping(path="/add") // Map ONLY POST Requests
-//    public @ResponseBody String addNewPublication (@RequestParam String title
-//            , @RequestParam String genre) {
-//        // @ResponseBody means the returned String is the response, not a view name
-//        // @RequestParam means it is a parameter from the GET or POST request
-//
-//        Publication p = new Publication();
-//        p.setTitle (title);
-//        p.setGenre(genre);
-//        publicationRepository.save(p);
-//        return "Saved";
-//    }
-
-//    @RequestMapping("/")
-//    public String index(){
-//        return "index";
-//    }
-
-
-
-//    @RequestMapping("/main")
+    private UserRepository userRepository;
     @GetMapping("/main")
     public String main(@RequestParam(name="title", required=false, defaultValue="User") String name, Model model) {
         Iterable<Publication> publications = publicationRepository.findAll();
         model.addAttribute("publications",publications);
         return "main";
-    }
-
-    private UserRepository userRepository;
-
-    @GetMapping("/")
-    public String IdUser(@RequestParam(name="title", required=false, defaultValue="User")String name, Model model) {
-        Iterable<ru.mtuci.demo.models.User> user = userRepository.findAll();
-        model.addAttribute("user",user);
-        return "block/header";
     }
 
     @GetMapping("/book/details")
@@ -89,7 +59,7 @@ public class libraryController {
 
         if ("redact".equals(action)) {
             Publication publication = publicationRepository.findById(id).orElseThrow();
-            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             publication.setTitle(title);
             publication.setGenre(genre);
             publication.setLink(link);
@@ -116,15 +86,6 @@ public class libraryController {
         return "book_add";
     }
 
-//    private PublicationService publicationService;
-//    @PostMapping("/book/add")
-//    //@PreAuthorize("hasAuthority('modification')")
-//    public ResponseEntity<PublicationDto> addPublication(@RequestBody PublicationDto publicationDto){
-//        PublicationDto savedPublication = publicationService.addPublication(publicationDto);
-//
-//        return new ResponseEntity<>(savedPublication, HttpStatus.CREATED);
-//    }
-
     @PostMapping("/book/add")
     @PreAuthorize("hasAuthority('modification')")
     public String bookPostAdd(@RequestParam(name="title", required=false) String title,
@@ -133,20 +94,21 @@ public class libraryController {
                               @RequestParam(name="description", required=false) String description
                               ){
 
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         Publication publication = new Publication(title,genre,user.getUsername(),LocalDateTime.now(),false,link,description);
         publicationRepository.save(publication);
         return "redirect:/main";
     }
-
+    @Autowired
+    public libraryController(UserRepository userRepository){
+        this.userRepository = userRepository;
+    }
     @GetMapping("/user")
-    public String user(@RequestParam(name="id", required=false, defaultValue="User") UUID id, Model model) {
-        if (!userRepository.existsById(id)){return "redirect:/main";}//хорошо бы сделать редирект на логаут
-        ru.mtuci.demo.models.User user = userRepository.findById(id).orElseThrow();
-        model.addAttribute("user", user);
-//        Optional<User> user = UserRepository.findById(id);
-//        model.addAttribute("user",user);
+    public String user(Model model) {
+        UserDetails  user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("user", userRepository.findByName(user.getUsername()));
+
         return "user_template";
     }
 }

@@ -1,25 +1,26 @@
 package ru.mtuci.demo.service;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.mtuci.demo.details.UserDetailsImpl;
-import ru.mtuci.demo.models.UserData;
+import ru.mtuci.demo.models.User;
 import ru.mtuci.demo.repository.UserRepository;
 
 @Service
-@RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final UserRepository repository;
+    private final UserRepository userRepository;
+
+    public UserDetailsServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return UserDetailsImpl.fromApplicationUser(
-                repository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found!"))
-        );
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found!"));
+        return UserDetailsImpl.fromApplicationUser(user);
     }
 
 }

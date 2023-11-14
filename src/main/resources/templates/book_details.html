@@ -19,7 +19,7 @@
             <div class="main_left">
                 <div class="main_left_content">
                     <div th:each="el : ${publication}">
-                        <ul>
+                        <ul th:if="${el.ban != True}">
                             <li>
                                 <h3 th:text = "${el.title}"/>
                                 <p th:text = "${el.genre}"/>
