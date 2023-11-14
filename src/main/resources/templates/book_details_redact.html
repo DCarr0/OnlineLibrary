@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Redacting a publication</title>
+</head>
+<section class="content">
+  <header th:insert="../templates/blocks/header :: header"></header>
+  <main>
+    <section>
+      <div class="main_left">
+        <div th:each="el : ${publication}">
+          <div class="book_add_h1">
+            <h1>Редактирование публикации</h1>
+          </div>
+          <form method="post" class="book_add_form">
+            <input type="text" name="title" placeholder="Введите название публикации" class="book_add_form_textarea" th:value="${el.title}" required>
+            <input type="text" name="genre" placeholder="Введите жанр публикации" class="book_add_form_textarea" th:value="${el.genre}" required>
+            <input type="url" name="link" placeholder="Введите ссылку на источник публикации: https://example.com" class="book_add_form_textarea" pattern="https://.*" size="30" value="https://" th:value="${el.link}" required>
+            <textarea name="description" placeholder="Введите описание книги" class="book_add_form_textarea_description" minlength="100" maxlength="255" th:text="${el.description}" required/>
+            <button type="submit" class="book_add_button">Изменить публикацию</button>
+          </form>
+        </div>
+      </div>
+      <div class="main_right">
+        <img src="../img/book3.png" alt="Oops.." height="835px" width="415px">
+      </div>
+    </section>
+  </main>
+</section>
+<footer th:insert="../templates/blocks/footer :: footer"></footer>
+</body>
+<style>
+  * {
+  padding: 0;
+  margin: 0;
+  font-family:'Courier New', Courier, monospace;
+}
+
+header {
+  background-color: rgb(216, 220, 226);
+
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+header section {
+  margin: 0 auto;
+  max-width: 1920px;
+}
+header ul {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  width: 100%;
+}
+header li {
+  text-align: center;
+  width: 33%;
+}
+.content {
+  min-height: calc(100vh - 45px);
+  height: 900px;
+}
+a {
+  text-decoration: none;
+}
+a:visited {
+  color: darkblue;
+}
+a:link {
+  color: darkblue;
+}
+a:hover {
+  color: rgb(0, 191, 255);
+}
+
+
+main {
+  width: 100%;
+}
+.auth_div{
+  width: 500px;
+  height: 150px;
+  margin: 0 auto;
+  margin-top: 200px;
+  padding: 15px;
+  border: 3px solid rgb(182, 184, 188);
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+}
+.auth_div h1{
+  text-align: center;
+}
+.auth_div p{
+  text-align: center;
+}
+.auth_button{
+  margin: 0 auto;
+  height: 25px;
+  width: 120px;
+  display: block;
+  margin: 0 auto;
+  margin-top: 5px;
+
+}
+.book_add_button{margin: 0 auto;
+  height: 25px;
+  width: 200px;
+  display: block;
+  margin: 0 auto;
+  margin-top: 5px;
+
+}
+.auth_textarea{
+  display: block;
+  margin: 0 auto;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  height: 20px;
+  width: 350px;
+}
+.auth_redirectToRegistration{
+  width: 500px;
+  height: 40px;
+  margin: 0 auto;
+  margin-top: 5px;
+  padding: 15px;
+  border: 3px solid rgb(182, 184, 188);
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+}
+.book_add_form{
+  width: 800px;
+  margin: 0 auto;
+  padding: 15px;
+  border: 3px solid rgb(182, 184, 188);
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+  margin-top: 200px;
+}
+.book_add_form_textarea{
+  display: block;
+  margin: 0 auto;
+  height: 22px;
+  width: 600px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.book_add_form_textarea_description{
+  resize: none;
+  display: block;
+  margin: 0 auto;
+  height: 80px;
+  width: 600px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.book_add_h1{
+  text-align: center;
+  padding: 15px;
+  border: 3px solid rgb(182, 184, 188);
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+  margin: 0 auto;
+  width: 570px;
+}
+main section{
+  max-width: 1920px;
+  margin: 0 auto;
+  display: flex;
+  height: 100%;
+}
+.text_area_1 {
+  resize: none;
+  height: 20px;
+  width: 800px;
+  border: none;
+  margin-top: 50px;
+  margin-left: 400px;
+}
+.text_area_div {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.but {
+  height: 20px;
+  margin-top: 50px;
+}
+.main_left{
+  width: 1505px;
+}
+.main_left_content{
+  width: 800px;
+  margin: 0 auto;
+}
+.main_left_content div{
+  margin-top: 200px;
+  width: 100%;
+}
+.main_left_content div{
+  width: 100%;
+}
+.main_right{
+  width: 415px;
+}
+.main_header {
+  text-align: center;
+  margin-bottom: 100px;
+  margin-top: 100px;
+  font-size: 30px;
+}
+.main_box1 {
+  display: flex;
+  margin: 0 auto;
+  width: 1200px;
+}
+.main_box1 div {
+  width: 600px;
+}
+.main_box2 {
+  display: flex;
+  margin: 0 auto;
+  width: 1200px;
+}
+.main_box2 div {
+  width: 600px;
+}
+.main_box2 img {
+  display: block;
+  margin: 0 auto;
+}
+
+.user_info{
+  display: flex;
+  width: 1100px;
+  max-width: 1100px;
+  margin: 0 auto;
+  margin-top: 100px;
+}
+.lasts_books{
+  margin-top: 100px;
+  margin:  0 auto;
+  width: 400px;
+}
+.book_info{
+  display: flex;
+  width: 1100px;
+  max-width: 1100px;
+  margin: 0 auto;
+  margin-top: 100px;
+}
+.comments{
+  margin-top: 100px;
+  width: 100%;
+}
+.description{
+  height: 100%;
+  width: 100%;
+}
+main ul{
+  list-style: none;
+}
+body{
+  background-color: aliceblue;
+}
+
+footer {
+  height: 45px;
+  width: 100%;
+  background-color:rgb(216, 220, 226);
+  box-shadow: 0 -10px 20px rgba(0, 0, 0, 0.15);
+}
+footer section {
+  max-width: 1920px;
+  margin:  0 auto;
+}
+footer ul {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+}
+.footer_div {
+  width: 400px;
+  margin-left: auto;
+  margin-right: 0em;
+
+}
+footer p {
+  margin-top: 15px;
+}
+</style>
+</html>

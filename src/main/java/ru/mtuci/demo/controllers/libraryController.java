@@ -61,12 +61,54 @@ public class libraryController {
     }
 
     @GetMapping("/book/details")
-    public String bookDetails(@RequestParam(name="id", required=false, defaultValue="User") UUID id, Model model) {
+    public String bookDetails(@RequestParam(name="id", required=false, defaultValue="User") UUID id,
+                              @RequestParam(name="action", required=false, defaultValue="") String action,
+                              Model model) {
+        String Sid = id.toString().replaceAll("-", "");
         if (!publicationRepository.existsById(id)){return "redirect:/main";}
         Publication publication = publicationRepository.findById(id).orElseThrow();
         model.addAttribute("publication", publication);
-        //model.addAttribute("publication", PublicationService.findOne(id).orElse(null));
+
+        if ("redact".equals(action)) {
+            return "book_details_redact";
+        }
+
+        if ("remove".equals(action)) {
+            return "book_details_remove";
+        }
         return "book_details";
+    }
+
+    @PostMapping("/book/details")
+    public String bookPostRedact(@RequestParam(name="id", required=false) UUID id,
+                                 @RequestParam(name="title", required=false) String title,
+                                 @RequestParam(name="genre", required=false) String genre,
+                                 @RequestParam(name="link", required=false) String link,
+                                 @RequestParam(name="description", required=false) String description,
+                                 @RequestParam(name="action", required=false, defaultValue="") String action){
+
+        if ("redact".equals(action)) {
+            Publication publication = publicationRepository.findById(id).orElseThrow();
+            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            publication.setTitle(title);
+            publication.setGenre(genre);
+            publication.setLink(link);
+            publication.setDescription(description);
+            publication.setDate(LocalDateTime.now());
+            publication.setPublisherName(user.getUsername());
+            publication.setBan(false);
+
+            publicationRepository.save(publication);
+        }
+
+        if ("remove".equals(action)) {
+            Publication publication = publicationRepository.findById(id).orElseThrow();
+            publication.setBan(true);
+
+            publicationRepository.save(publication);
+        }
+
+        return "redirect:/main";
     }
 
     @GetMapping("/book/add")

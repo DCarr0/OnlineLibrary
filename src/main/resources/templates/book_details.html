@@ -6,6 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Publication description</title>
+    <script>
+        function confirmDelete() {
+            return confirm("Вы точно хотите удалить публикацию?");
+        }
+    </script>
 </head>
 <section class="content">
     <header th:insert="../templates/blocks/header :: header"></header>
@@ -22,8 +27,10 @@
                                 <p th:text = "${el.date}"/>
                                 <p><a th:href ="${el.link}">Ссылка на источник</a></p>
                                 <div><p th:text = "${el.description}"/></div>
-                                <a href="'/book/details' + ${el.id} + '/redact'">Редактировать</a>
-                                <a href="'/book/details' + ${el.id} + '/remove'">Удалить</a>
+                                <a th:href="@{/book/details(id=${el.id},action='redact')}">Редактировать</a>
+                                <form th:action="@{/book/details?(id=${el.id},action='remove')}" method="post">
+                                    <button onclick="return confirmDelete();" type="submit" >Удалить</button>
+                                </form>
                             </li>
                         </ul>
                     </div>
