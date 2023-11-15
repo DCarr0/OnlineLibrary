@@ -1,4 +1,9 @@
 <div th:fragment="header" xmlns:th="http://www.w3.org/1999/xhtml">
+    <script>
+        function confirmLogout() {
+            return confirm("Вы точно хотите выйти из аккаунта?");
+        }
+    </script>
     <div class="container">
             <section>
                 <div>
@@ -14,8 +19,6 @@
                             </a>
                         </li>
                         <li>
-<!--                            th:each="el : ${user}"-->
-<!--                            th:href="@{/user?(id=${el.id})}"-->
                             <div>
                                 <a href="/user">
                                     <h1>Личный кабинет</h1>
@@ -25,7 +28,7 @@
                         <li>
                             <div>
                                 <form th:action="@{/logout}" method="post">
-                                  <input type="submit" value="Выйти из аккаунта" class="logout"/>
+                                    <button onclick="return confirmLogout();" type="submit" class="logout">Выйти из аккаунта</button>
                                 </form>
                             </div>
                         </li>

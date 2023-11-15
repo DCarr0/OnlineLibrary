@@ -29,6 +29,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/registration", "/autorisation").permitAll()
+                        .requestMatchers("/book/add").hasAnyAuthority("MODERATOR","ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

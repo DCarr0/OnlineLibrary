@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -12,6 +12,7 @@
         }
     </script>
 </head>
+<body>
 <section class="content">
     <header th:insert="../templates/blocks/header :: header"></header>
     <main>
@@ -27,8 +28,8 @@
                                 <p th:text = "${el.date}"/>
                                 <p><a th:href ="${el.link}">Ссылка на источник</a></p>
                                 <div><p th:text = "${el.description}"/></div>
-                                <a th:href="@{/book/details(id=${el.id},action='redact')}">Редактировать</a>
-                                <form th:action="@{/book/details?(id=${el.id},action='remove')}" method="post">
+                                <a th:href="@{/book/details(id=${el.id},action='redact')}" sec:authorize="hasRole('MODERATOR')">Редактировать</a>
+                                <form th:action="@{/book/details?(id=${el.id},action='remove')}" sec:authorize="hasRole('ADMIN')" method="post">
                                     <button onclick="return confirmDelete();" type="submit" >Удалить</button>
                                 </form>
                             </li>

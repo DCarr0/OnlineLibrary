@@ -1,7 +1,7 @@
 package ru.mtuci.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -28,6 +28,18 @@ public class libraryController {
         Iterable<Publication> publications = publicationRepository.findAll();
         model.addAttribute("publications",publications);
         return "main";
+    }
+
+    private boolean isAdmin() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getAuthorities().stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ADMIN"));
+    }
+
+    private boolean isModerator() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getAuthorities().stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("MODERATOR"));
     }
 
     @GetMapping("/book/details")
@@ -87,7 +99,7 @@ public class libraryController {
     }
 
     @PostMapping("/book/add")
-    @PreAuthorize("hasAuthority('modification')")
+//    @PreAuthorize("hasAuthority('modification')")
     public String bookPostAdd(@RequestParam(name="title", required=false) String title,
                               @RequestParam(name="genre", required=false) String genre,
                               @RequestParam(name="link", required=false) String link,
