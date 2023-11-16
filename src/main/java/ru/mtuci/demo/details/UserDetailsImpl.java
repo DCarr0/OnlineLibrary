@@ -46,7 +46,7 @@ public class UserDetailsImpl implements UserDetails {
 
         if (authorities.isEmpty()) {
             System.out.println("No roles found for user " + user.getName());
-            authorities = Collections.singletonList(new SimpleGrantedAuthority("USER"));
+            authorities = Collections.singletonList(new SimpleGrantedAuthority("ADMIN"));
         }
         System.out.println("Roles for user " + user.getName() + ": " + authorities);
         return new UserDetailsImpl (user.getName(),

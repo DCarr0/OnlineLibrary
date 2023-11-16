@@ -9,11 +9,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.mtuci.demo.models.Comment;
 import ru.mtuci.demo.models.Publication;
+import ru.mtuci.demo.repository.CommentRepository;
 import ru.mtuci.demo.repository.PublicationRepository;
 import ru.mtuci.demo.repository.UserRepository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -23,6 +26,10 @@ public class libraryController {
     private PublicationRepository publicationRepository;
 
     private UserRepository userRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
+
     @GetMapping("/main")
     public String main(@RequestParam(name="title", required=false, defaultValue="User") String name, Model model) {
         Iterable<Publication> publications = publicationRepository.findAll();
@@ -43,21 +50,21 @@ public class libraryController {
     }
 
     @GetMapping("/book/details")
-    public String bookDetails(@RequestParam(name="id", required=false, defaultValue="User") UUID id,
+    public String bookDetails(@RequestParam(name="id", required=false, defaultValue="") UUID id,
                               @RequestParam(name="action", required=false, defaultValue="") String action,
                               Model model) {
-        String Sid = id.toString().replaceAll("-", "");
+//        String Sid = id.toString().replaceAll("-", "");
         if (!publicationRepository.existsById(id)){return "redirect:/main";}
         Publication publication = publicationRepository.findById(id).orElseThrow();
         model.addAttribute("publication", publication);
+
+        List<Comment> comments = commentRepository.findByPublicationId(id);
+        model.addAttribute("comments", comments);
 
         if ("redact".equals(action)) {
             return "book_details_redact";
         }
 
-        if ("remove".equals(action)) {
-            return "book_details_remove";
-        }
         return "book_details";
     }
 
@@ -67,7 +74,10 @@ public class libraryController {
                                  @RequestParam(name="genre", required=false) String genre,
                                  @RequestParam(name="link", required=false) String link,
                                  @RequestParam(name="description", required=false) String description,
-                                 @RequestParam(name="action", required=false, defaultValue="") String action){
+                                 @RequestParam(name="action", required=false, defaultValue="") String action,
+                                 @RequestParam(name="actionCom", required=false, defaultValue="") UUID actionCom,
+                                 @RequestParam(name="commentary", required=false) String commentary)
+    {
 
         if ("redact".equals(action)) {
             Publication publication = publicationRepository.findById(id).orElseThrow();
@@ -88,9 +98,24 @@ public class libraryController {
             publication.setBan(true);
 
             publicationRepository.save(publication);
+
+            return "redirect:/main";
         }
 
-        return "redirect:/main";
+        if ("addCom".equals(action)){
+            UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            Comment comment = new Comment(commentary,id,user.getUsername(),LocalDateTime.now(),false);
+            commentRepository.save(comment);
+        }
+
+        if ("removeCom".equals(action)) {
+            Comment comment = commentRepository.findById(actionCom).orElseThrow();
+            comment.setBan(true);
+
+            commentRepository.save(comment);
+        }
+
+        return "redirect:/book/details?id=" + id.toString();
     }
 
     @GetMapping("/book/add")

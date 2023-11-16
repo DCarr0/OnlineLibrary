@@ -1,16 +1,17 @@
 package ru.mtuci.demo.models;
 
 import jakarta.persistence.*;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
 @Table(name = "comments")
-public class Сomment {
+@ToString
+public class Comment{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)//При добавлении новой записи позволяет генерировать каждый раз новое значение.
-
     private UUID id;
     private String commentary;
     private UUID publicationId;
@@ -63,6 +64,17 @@ public class Сomment {
     }
 
     public void setBan(Boolean ban) {
+        this.ban = ban;
+    }
+
+    public Comment(){super();};
+
+    public Comment(String commentary, UUID publicationId, String publisherName, LocalDateTime date, Boolean ban) {
+        super();
+        this.commentary = commentary;
+        this.publicationId = publicationId;
+        this.publisherName = publisherName;
+        this.date = date;
         this.ban = ban;
     }
 }

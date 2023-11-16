@@ -7,8 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Publication description</title>
     <script>
-        function confirmDelete() {
+        function confirmDeletePublication() {
             return confirm("Вы точно хотите удалить публикацию?");
+        }
+        function confirmDeleteComment() {
+            return confirm("Вы точно хотите удалить комментарий?");
         }
     </script>
 </head>
@@ -19,6 +22,7 @@
         <section>
             <div class="main_left">
                 <div class="main_left_content">
+
                     <div th:each="el : ${publication}">
                         <ul th:if="${el.ban != True}">
                             <li>
@@ -30,12 +34,32 @@
                                 <div><p th:text = "${el.description}"/></div>
                                 <a th:href="@{/book/details(id=${el.id},action='redact')}" sec:authorize="hasRole('MODERATOR')">Редактировать</a>
                                 <form th:action="@{/book/details?(id=${el.id},action='remove')}" sec:authorize="hasRole('ADMIN')" method="post">
-                                    <button onclick="return confirmDelete();" type="submit" >Удалить</button>
+                                    <button onclick="return confirmDeletePublication();" type="submit" >Удалить</button>
                                 </form>
                             </li>
                         </ul>
-                    </div>
 
+                        <div th:each="com : ${comments}">
+                            <ul th:if="${com.ban != True} and ${el.ban != True}">
+                                <li>
+                                    <h3 th:text = "${com.publisherName}" />
+                                    <p th:text = "${com.date}" />
+                                    <p th:text = "${com.commentary}" />
+                                    <form th:action="@{/book/details(id=${el.id},actionCom = ${com.id},action='removeCom')}" sec:authorize="hasRole('ADMIN')" method="post">
+                                        <button onclick="return confirmDeleteComment();" type="submit" >Удалить</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <form th:action="@{/book/details(id=${el.id},action='addCom')}" method="post">
+                                <h4>Оставьте свой комментарий по этой публикации!</h4>
+                                <textarea rows="4" cols="50" name="commentary" placeholder="Введите свой комментарий:" id="book_add_form_textarea_description" minlength="1" maxlength="255" ></textarea>
+                                <button type="submit" >Оставить</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="main_right">
@@ -262,6 +286,15 @@ footer ul {
 }
 footer p {
     margin-top: 15px;
+}
+#book_add_form_textarea_description{
+  resize: none;
+  display: block;
+  margin: 0 auto;
+  height: 80px;
+  width: 600px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 </style>
 </html>
