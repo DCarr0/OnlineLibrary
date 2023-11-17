@@ -49,7 +49,7 @@ public class UserDetailsImpl implements UserDetails {
             authorities = Collections.singletonList(new SimpleGrantedAuthority("ADMIN"));
         }
         System.out.println("Roles for user " + user.getName() + ": " + authorities);
-        return new UserDetailsImpl (user.getName(),
+        return new UserDetailsImpl (user.getEmail(),
                 user.getPassword(),
                 authorities,
                 !user.getBan());

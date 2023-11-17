@@ -104,7 +104,8 @@ public class libraryController {
 
         if ("addCom".equals(action)){
             UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Comment comment = new Comment(commentary,id,user.getUsername(),LocalDateTime.now(),false);
+            var name = userRepository.findUserByEmail(user.getUsername()).getName();
+            Comment comment = new Comment(commentary,id,name,LocalDateTime.now(),false);
             commentRepository.save(comment);
         }
 
@@ -132,8 +133,8 @@ public class libraryController {
                               ){
 
         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        Publication publication = new Publication(title,genre,user.getUsername(),LocalDateTime.now(),false,link,description);
+        var name = userRepository.findUserByEmail(user.getUsername()).getName();
+        Publication publication = new Publication(title,genre,name,LocalDateTime.now(),false,link,description);
         publicationRepository.save(publication);
         return "redirect:/main";
     }
@@ -144,7 +145,7 @@ public class libraryController {
     @GetMapping("/user")
     public String user(Model model) {
         UserDetails  user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("user", userRepository.findByName(user.getUsername()));
+        model.addAttribute("user", userRepository.findUserByEmail(user.getUsername()));
 
         return "user_template";
     }
