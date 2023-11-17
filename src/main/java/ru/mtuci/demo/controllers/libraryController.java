@@ -25,6 +25,7 @@ public class libraryController {
     @Autowired
     private PublicationRepository publicationRepository;
 
+    @Autowired
     private UserRepository userRepository;
 
     @Autowired
@@ -53,8 +54,8 @@ public class libraryController {
     public String bookDetails(@RequestParam(name="id", required=false, defaultValue="") UUID id,
                               @RequestParam(name="action", required=false, defaultValue="") String action,
                               Model model) {
-//        String Sid = id.toString().replaceAll("-", "");
         if (!publicationRepository.existsById(id)){return "redirect:/main";}
+
         Publication publication = publicationRepository.findById(id).orElseThrow();
         model.addAttribute("publication", publication);
 
@@ -125,7 +126,6 @@ public class libraryController {
     }
 
     @PostMapping("/book/add")
-//    @PreAuthorize("hasAuthority('modification')")
     public String bookPostAdd(@RequestParam(name="title", required=false) String title,
                               @RequestParam(name="genre", required=false) String genre,
                               @RequestParam(name="link", required=false) String link,
