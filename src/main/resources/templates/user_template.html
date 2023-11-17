@@ -18,30 +18,11 @@
                     <div th:each="el : ${user}">
                         <ul>
                             <li>
-                                <h3 th:text = "${el.name}" />
-                                <p th:text = "${el.email}"/>
-                                <p th:text = "${el.date}"/>
+                                <h1> Добро пожаловать </h1>
+                                <h3 th:text = "${el.name}"></h3>
+                                <p> Ваша почта: <span th:text = "${el.email}" /></p>
+                                <p> Вы зарегистрировались на нашем сайте: <span th:text = "${el.date}" /></p>
                                 <p th:text = "${el.roles}"/>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="lasts_books">
-                        <p>Последние книги</p>
-                        <ul>
-                            <li>
-                                _book1_
-                            </li>
-                            <li>
-                                _book2_
-                            </li>
-                            <li>
-                                _book3_
-                            </li>
-                            <li>
-                                _book4_
-                            </li>
-                            <li>
-                                _book5_
                             </li>
                         </ul>
                     </div>

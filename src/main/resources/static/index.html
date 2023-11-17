@@ -20,13 +20,13 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/book">
-                            <h1>Случайная книга</h1>
+                        <a href="/registration">
+                            <h1>Регистрация</h1>
                         </a>
                     </li>
                     <li>
-                        <a href="/user">
-                            <h1>Личный кабинет</h1>
+                        <a href="/autorisation">
+                            <h1>Авторизация</h1>
                         </a>
                     </li>
                 </ul>
@@ -48,18 +48,19 @@
                             <p>На нашем сайте есть возможность стать издателем и публиковать свою книгу нужно всего лишь
                                 перейти
                                 по ссылке ниже</p>
-                            <a href="#">Стать издателем!</a>
+                            <a href="/registration">Стать издателем!</a>
                         </div>
                     </div>
                 </div>
                 <div class="main_right">
-                    <img src="img/book3.png" alt="Oops.." height="835px" width="415px">
                 </div>
             </section>
         </main>
     </section>
-    <footer><section>
+    <footer>
         <div>
+            <section>
+                <div class="footer_div">
             <ul>
                 <li>
                     <p>all rights reserved</p>
@@ -68,8 +69,27 @@
                     <p>GoldenHogsCompany</p>
                 </li>
             </ul>
+                </div>
+            </section>
         </div>
-    </section></footer>
+    </footer>
 </body>
-
+<style>
+main section{
+    max-width: 1920px;
+    margin: 0 auto;
+    display: flex;
+    min-height: calc(100vh - 107px);
+    height: 100%;
+}
+.content{
+    height: 100%;
+}
+.main_right{
+    display: block;
+    width: 415px;
+    min-height: 100%;
+    background-image: url("../img/book3.png");
+}
+</style>
 </html>

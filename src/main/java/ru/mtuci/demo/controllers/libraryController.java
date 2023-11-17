@@ -148,4 +148,8 @@ public class libraryController {
 
         return "user_template";
     }
+    @GetMapping("/")
+    public String welcome() {
+        return "../static/index.html";
+    }
 }

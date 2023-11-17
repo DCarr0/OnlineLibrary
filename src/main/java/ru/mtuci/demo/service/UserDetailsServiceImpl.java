@@ -23,4 +23,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return UserDetailsImpl.fromApplicationUser(user);
     }
 
+    public UserDetails UserByUsername(String name) {
+        return (UserDetails) userRepository.findByName(name);
+    }
+
 }

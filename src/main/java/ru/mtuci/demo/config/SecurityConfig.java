@@ -28,7 +28,7 @@ public class SecurityConfig {
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/registration", "/autorisation").permitAll()
+                        .requestMatchers("/registration", "/autorisation", "/", "/img/book3.png","/style.css").permitAll()
                         .requestMatchers("/book/add").hasAnyAuthority("MODERATOR","ADMIN")
                         .anyRequest().authenticated()
                 )

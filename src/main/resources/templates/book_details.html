@@ -26,12 +26,12 @@
                     <div th:each="el : ${publication}">
                         <ul th:if="${el.ban != True}">
                             <li>
-                                <h3 th:text = "${el.title}"/>
+                                <h3> <p th:text = "${el.title}"/> </h3>
                                 <p th:text = "${el.genre}"/>
                                 <p th:text = "${el.publisherName}"/>
                                 <p th:text = "${el.date}"/>
                                 <p><a th:href ="${el.link}">Ссылка на источник</a></p>
-                                <div><p th:text = "${el.description}"/></div>
+                                <div class="book_description"><p th:text = "${el.description}"></p></div>
                                 <a th:href="@{/book/details(id=${el.id},action='redact')}" sec:authorize="hasRole('MODERATOR')">Редактировать</a>
                                 <form th:action="@{/book/details?(id=${el.id},action='remove')}" sec:authorize="hasRole('ADMIN')" method="post">
                                     <button onclick="return confirmDeletePublication();" type="submit" >Удалить</button>
@@ -39,12 +39,12 @@
                             </li>
                         </ul>
 
-                        <div th:each="com : ${comments}">
+                        <div th:each="com : ${comments}" class="coms">
                             <ul th:if="${com.ban != True} and ${el.ban != True}">
                                 <li>
                                     <h3 th:text = "${com.publisherName}" />
                                     <p th:text = "${com.date}" />
-                                    <p th:text = "${com.commentary}" />
+                                    <div th:text = "${com.commentary}"></div>
                                     <form th:action="@{/book/details(id=${el.id},actionCom = ${com.id},action='removeCom')}" sec:authorize="hasRole('ADMIN')" method="post">
                                         <button onclick="return confirmDeleteComment();" type="submit" >Удалить</button>
                                     </form>
@@ -63,7 +63,6 @@
                 </div>
             </div>
             <div class="main_right">
-                <img src="../img/book3.png" alt="Oops.." height="835px" width="415px">
             </div>
         </section>
     </main>
@@ -76,7 +75,10 @@
     margin: 0;
     font-family:'Courier New', Courier, monospace;
 }
+.book_description {
 
+    max-width:90%;
+}
 header {
     background-color: rgb(216, 220, 226);
 
@@ -100,8 +102,7 @@ header li {
     width: 33%;
 }
 .content {
-    min-height: calc(100vh - 45px);
-    height: 900px;
+    height: 100%;
 }
 a {
     text-decoration: none;
@@ -165,6 +166,7 @@ main section{
     max-width: 1920px;
     margin: 0 auto;
     display: flex;
+    min-height: calc(100vh - 107px);
     height: 100%;
 }
 .text_area_1 {
@@ -192,12 +194,10 @@ main section{
     margin: 0 auto;
 }
 .main_left_content div{
-    margin-top: 200px;
+    margin-top: 20px;
     width: 100%;
 }
-.main_left_content div{
-    width: 100%;
-}
+
 .main_right{
     width: 415px;
 }
@@ -295,6 +295,15 @@ footer p {
   width: 600px;
   margin-top: 5px;
   margin-bottom: 5px;
+}
+.content{
+    height: 100%;
+}
+.main_right{
+    display: block;
+    width: 415px;
+    min-height: 100%;
+    background-image: url("../img/book3.png");
 }
 </style>
 </html>
