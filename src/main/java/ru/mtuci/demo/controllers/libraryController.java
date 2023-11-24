@@ -19,6 +19,7 @@ import ru.mtuci.demo.repository.UserRepository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -186,13 +187,12 @@ public class libraryController {
                 Iterable<Publication> search1 = publicationRepository.findByTitleContainingIgnoreCase(searchString);
                 search1.forEach(searchResults::add);
 
-                Iterable<Publication> search2 = publicationRepository.findByGenreContainingIgnoreCase(searchString);
+                Iterable<Publication> search2 = publicationRepository.findByGenre(searchString);
                 search2.forEach(searchResults::add);
 
                 List<Publication> Results = searchResults.stream()
                         .filter(distinctByKey(Publication::getId))
                         .collect(Collectors.toList());
-
                 model.addAttribute("publications", Results);
             } catch (Exception e) {
                 e.printStackTrace();

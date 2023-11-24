@@ -8,5 +8,5 @@ import java.util.UUID;
 
 public interface PublicationRepository extends JpaRepository<Publication, UUID> {
     Iterable<Publication> findByTitleContainingIgnoreCase(String title) throws Exception;
-    Iterable<Publication> findByGenreContainingIgnoreCase(String title) throws Exception;
+    Iterable<Publication> findByGenre(String title) throws Exception;
 }

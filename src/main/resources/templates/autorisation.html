@@ -10,6 +10,8 @@
 <header th:insert="blocks/header :: header"></header>
 
 <main>
+    <section>
+        <div style="margin: 0 auto">
     <div class="auth_div">
     <h1>Привет, это авторизация!</h1>
     <div th:if="${param.error}">
@@ -32,6 +34,8 @@
         <h1>Не зарегистрированы?</h1>
         <a href="/registration"><p>Нажмите для регистрации</p></a>
     </div>
+        </div>
+    </section>
 </main>
 
 

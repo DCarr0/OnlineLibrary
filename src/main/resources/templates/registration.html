@@ -11,7 +11,8 @@
     <body>
         <header th:insert="blocks/header :: header"></header>
         <main>
-            <div class="auth_div">
+<section>
+            <div class="reg_div">
                 <h1 class="">Register a new account</h1>
 
                 <form action="/registration" th:action="@{/registration}" th:object="${userData}" method="post">
@@ -42,6 +43,7 @@
                     <div><input type="submit" class="auth_button" value="Зарегистрироваться"/></div>
                 </form>
             </div>
+</section>
         </main>
 
     </body>
