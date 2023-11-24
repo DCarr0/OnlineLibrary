@@ -17,8 +17,13 @@ import ru.mtuci.demo.repository.PublicationRepository;
 import ru.mtuci.demo.repository.UserRepository;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+
+import static ru.mtuci.demo.service.PublicationService.distinctByKey;
+
 
 @Controller
 public class libraryController {
@@ -176,8 +181,19 @@ public class libraryController {
     public String searchPage(@RequestParam("searchString") String searchString, Model model) {
         if (searchString != null) {
             try {
-                Iterable<Publication> searchResult = publicationRepository.findByTitleContainingIgnoreCase(searchString);
-                model.addAttribute("publications", searchResult);
+                List<Publication> searchResults = new ArrayList<>();
+
+                Iterable<Publication> search1 = publicationRepository.findByTitleContainingIgnoreCase(searchString);
+                search1.forEach(searchResults::add);
+
+                Iterable<Publication> search2 = publicationRepository.findByGenreContainingIgnoreCase(searchString);
+                search2.forEach(searchResults::add);
+
+                List<Publication> Results = searchResults.stream()
+                        .filter(distinctByKey(Publication::getId))
+                        .collect(Collectors.toList());
+
+                model.addAttribute("publications", Results);
             } catch (Exception e) {
                 e.printStackTrace();
             }
