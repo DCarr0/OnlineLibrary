@@ -9,4 +9,5 @@ import java.util.UUID;
 public interface PublicationService {
     PublicationDto addPublication(PublicationDto publicationDto);
     Optional<Publication> findOne(UUID id);
+    //Iterable<Publication> findByTitleContainingIgnoreCase(String title) throws Exception;
 }

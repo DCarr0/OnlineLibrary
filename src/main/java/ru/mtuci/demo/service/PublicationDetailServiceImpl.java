@@ -20,6 +20,15 @@ public class PublicationDetailServiceImpl implements PublicationService {
         return publicationRepository.findById(id);
     }
 
+//    @Override
+//    public Iterable<Publication> findByTitleContainingIgnoreCase(String title) throws Exception {
+//        Iterable<Publication> searchResult = publicationRepository.findByTitleContainingIgnoreCase(title);
+//        if(searchResult != null){
+//            throw new Exception("Пост не найден");
+//        }
+//        return searchResult;
+//    }
+
     @Override
     public PublicationDto addPublication(PublicationDto publicationDto){
         Publication publication = new Publication();

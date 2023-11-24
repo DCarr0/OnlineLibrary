@@ -172,4 +172,16 @@ public class libraryController {
     public String welcome() {
         return "../static/index.html";
     }
+    @PostMapping("/main")
+    public String searchPage(@RequestParam("searchString") String searchString, Model model) {
+        if (searchString != null) {
+            try {
+                Iterable<Publication> searchResult = publicationRepository.findByTitleContainingIgnoreCase(searchString);
+                model.addAttribute("publications", searchResult);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return "main";
+    }
 }

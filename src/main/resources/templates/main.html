@@ -15,8 +15,10 @@
         <section>
             <div class="main_left">
                 <div class="text_area_div">
-                <textarea name="search" id="" cols="1" rows="1" class="text_area_1" placeholder="Для поиска введите название книги"></textarea>
-                    <button type="submit" class="but">Поиск</button>
+                    <form action="/main" method="post" class="book_add_form">
+                        <input type="text" name="searchString" placeholder="Введите название публикации" class="text_area_1" required>
+                        <button type="submit" class="but">Поиск</button>
+                    </form>
                 </div>
                 <div class="main_left_content">
                     <h1>Каталог</h1>
@@ -38,9 +40,6 @@
 <footer th:insert="../templates/blocks/footer :: footer"></footer>
 </body>
 <style>
-    .content{
-        height: 100%;
-    }
     .main_right{
         display: block;
         width: 415px;
