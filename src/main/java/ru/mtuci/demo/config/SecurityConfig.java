@@ -36,9 +36,11 @@ public class SecurityConfig {
                         .loginPage("/autorisation").permitAll()
                         .defaultSuccessUrl("/main", true))
                 .logout(form -> form
-                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "POST")).permitAll()
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "POST"))
+                        .logoutSuccessUrl("/")
                         .invalidateHttpSession(true)
                         .clearAuthentication(true)
+                        .permitAll()
                         .deleteCookies("JSESSIONID", "XSRF-TOKEN"));
 
     return http.build();
