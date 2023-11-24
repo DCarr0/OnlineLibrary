@@ -10,6 +10,8 @@ import ru.mtuci.demo.exceptions.UnkownIdentifierException;
 import ru.mtuci.demo.exceptions.UserAlreadyExistException;
 import ru.mtuci.demo.models.User;
 import ru.mtuci.demo.models.UserData;
+import ru.mtuci.demo.models.UserRole;
+import ru.mtuci.demo.repository.RoleRepository;
 import ru.mtuci.demo.repository.UserRepository;
 
 @Service("userRegistrationService")
@@ -19,20 +21,23 @@ public class UserRegistrationService implements UserService {
     private UserRepository userRepository;
 
     @Autowired
+    private RoleRepository roleRepository;
+    @Autowired
     PasswordEncoder passwordEncoder;
 
     @Override
     public void registration(UserData user) throws UserAlreadyExistException {
 
-        //Let's check if user already registered with us
         if(checkIfUserExist(user.getEmail())){
             throw new UserAlreadyExistException("User already exists for this email");
         }
         User User = new User();
         BeanUtils.copyProperties(user, User);
+
+        User.setRole(UserRole.USER);
+
         encodePassword(User, user);
         userRepository.save(User);
-//связь с ролью
     }
 
 

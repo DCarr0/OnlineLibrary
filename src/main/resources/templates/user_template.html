@@ -18,11 +18,11 @@
                     <div th:each="el : ${user}">
                         <ul>
                             <li>
-                                <h1> Добро пожаловать </h1>
+                                <h1> Добро пожаловать! </h1>
                                 <h3 th:text = "${el.name}"></h3>
                                 <p> Ваша почта: <span th:text = "${el.email}" /></p>
                                 <p> Вы зарегистрировались на нашем сайте: <span th:text = "${el.date}" /></p>
-                                <p th:text = "${el.roles}"/>
+                                <p> Вы имеете роль: <span th:text = "${el.role}" /></p>
                             </li>
                         </ul>
                     </div>

@@ -14,8 +14,10 @@
   <main>
     <section>
       <div class="main_left">
-        
-        <form action="/book/add" method="post" class="book_add_form">
+        <div class="book_add_error">
+          <div th:if="${message}" th:text="${message}" style="color: red; font-size: 28px;" class="book_add_h1"></div>
+        </div>
+        <form th:if="!${message}" action="/book/add" method="post" class="book_add_form">
           <div class="book_add_h1">
             <h1>Добавление книги в общую библиотеку</h1>
           </div>
@@ -141,6 +143,20 @@ main {
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
   margin-top: 200px;
 }
+.book_add_error{
+  width: 800px;
+  margin: 0 auto;
+  padding: 15px;
+  border: 3px solid rgb(182, 184, 188);
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+  margin-top: 200px;
+}
+.book_add_h1{
+  text-align: center;
+  padding: 15px;
+  margin: 0 auto;
+  width: 570px;
+}
 .book_add_form_textarea{
   display: block;
   margin: 0 auto;
@@ -157,14 +173,6 @@ main {
   width: 600px;
   margin-top: 5px;
   margin-bottom: 5px;
-}
-.book_add_h1{
-  text-align: center;
-  padding: 15px;
-  border: 3px solid rgb(182, 184, 188);
-  box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
-  margin: 0 auto;
-  width: 570px;
 }
 main section{
   max-width: 1920px;

@@ -24,6 +24,7 @@
                 <div class="main_left_content">
 
                     <div th:each="el : ${publication}">
+                        <div th:if="${message}" th:text="${message}" style="color: red;" class="book_add_h1"></div>
                         <ul th:if="${el.ban != True}">
                             <li>
                                 <h3> <p th:text = "${el.title}"/> </h3>
@@ -32,9 +33,9 @@
                                 <p th:text = "${el.date}"/>
                                 <p><a th:href ="${el.link}">Ссылка на источник</a></p>
                                 <div class="book_description"><p th:text = "${el.description}"></p></div>
-                                <a th:href="@{/book/details(id=${el.id},action='redact')}" sec:authorize="hasRole('MODERATOR')">Редактировать</a>
-                                <form th:action="@{/book/details?(id=${el.id},action='remove')}" sec:authorize="hasRole('ADMIN')" method="post">
-                                    <button onclick="return confirmDeletePublication();" type="submit" >Удалить</button>
+                                <a th:href="@{/book/details(id=${el.id},action='redact')}" sec:authorize="hasAuthority('modification')">Редактировать</a>
+                                <form th:action="@{/book/details?(id=${el.id},action='remove')}" sec:authorize="hasAuthority('ADMIN') or hasAuthority('delete')" method="post">
+                                    <button onclick="return confirmDeletePublication();" type="submit">Удалить</button>
                                 </form>
                             </li>
                         </ul>
@@ -74,6 +75,14 @@
     padding: 0;
     margin: 0;
     font-family:'Courier New', Courier, monospace;
+}
+.book_add_h1{
+  text-align: center;
+  padding: 15px;
+  border: 3px solid rgb(182, 184, 188);
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+  margin: 0 auto;
+  width: 570px;
 }
 .book_description {
 

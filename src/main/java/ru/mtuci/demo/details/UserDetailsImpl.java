@@ -6,9 +6,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.mtuci.demo.models.User;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor
@@ -39,16 +38,15 @@ public class UserDetailsImpl implements UserDetails {
     }
 
     public static UserDetails fromApplicationUser(User user) {
-        var authorities = user.getRoles().stream()
-                .map(role -> role.getName().grantedAuthority())
-                .flatMap(Set::stream)
-                .toList();
+        var authorities = user.getUserRole().getPermissions()
+                .stream()
+                .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
+                .collect(Collectors.toList());
 
         if (authorities.isEmpty()) {
-            System.out.println("No roles found for user " + user.getName());
-            authorities = Collections.singletonList(new SimpleGrantedAuthority("ADMIN"));
+            System.out.println("No roles found for user with name " + user.getName());
         }
-        System.out.println("Roles for user " + user.getName() + ": " + authorities);
+        System.out.println("Roles for user with name " + user.getName() + ": " + authorities);
         return new UserDetailsImpl (user.getEmail(),
                 user.getPassword(),
                 authorities,
