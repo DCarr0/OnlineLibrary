@@ -1,7 +1,6 @@
 package ru.mtuci.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -43,22 +42,10 @@ public class libraryController {
     private UserRateRepository userRateRepository;
 
     @GetMapping("/main")
-    public String main(@RequestParam(name="title", required=false, defaultValue="User") String name, Model model) {
+    public String main(Model model) {
         Iterable<Publication> publications = publicationRepository.findAll();
         model.addAttribute("publications",publications);
         return "main";
-    }
-
-    private boolean isAdmin() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return authentication.getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ADMIN"));
-    }
-
-    private boolean isModerator() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return authentication.getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("MODERATOR"));
     }
 
     @GetMapping("/book/details")
@@ -91,7 +78,7 @@ public class libraryController {
                                  @RequestParam(name="action", required=false, defaultValue="") String action,
                                  @RequestParam(name="actionCom", required=false, defaultValue="") UUID actionCom,
                                  @RequestParam(name="commentary", required=false) String commentary,
-                                 @RequestParam(name = "rate",required = false)int rate,
+                                 @RequestParam(name = "rate", required = false) Integer rate,
                                  RedirectAttributes redirectAttributes)
     {
         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -164,7 +151,7 @@ public class libraryController {
     }
 
     @GetMapping("/book/add")
-    public String bookAdd(@RequestParam(name="title", required=false, defaultValue="User") String name, Model model) {
+    public String bookAdd(Model model) {
         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         var flag = userRepository.findUserByEmail(user.getUsername()).getRequestToRedactor();
         if (!flag) {
@@ -194,10 +181,22 @@ public class libraryController {
     public String user(Model model) {
         UserDetails  user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("user", userRepository.findUserByEmail(user.getUsername()));
-        // передать публикации с паблишер айди этого юзера
-        var name = userRepository.findUserByEmail(user.getUsername()).getName();
-        Iterable<Publication> publications = publicationRepository.findByPublisherName(name);
+
+        var id = userRepository.findUserByEmail(user.getUsername()).getId();
+        Iterable<UserRate> userRates = userRateRepository.findByUserId(id);
+
+        List<Publication> publications = new ArrayList<>();
+
+        for (UserRate userRate : userRates) {
+            Optional<Publication> publicationOptional = publicationRepository.findById(userRate.getPublicationId());
+
+            if (publicationOptional.isPresent()) {
+                Publication publication = publicationOptional.get();
+                publications.add(publication);
+            }
+        }
         model.addAttribute("publications", publications);
+
         return "user_template";
     }
     @GetMapping("/")

@@ -2,7 +2,6 @@ package ru.mtuci.demo.models;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -28,7 +27,9 @@ public class Publication {
     private Boolean ban;
     private String link;
     private String description;
-    private int rate;
+    private Integer rate;
+
+
 
     public String getDescription() {
         return description;
@@ -77,7 +78,7 @@ public class Publication {
     public void setDate(LocalDateTime date) {
         this.date = date;
     }
-    public void editRate(int rate) {this.rate +=rate;}
+
     public Boolean getBan() {
         return ban;
     }
@@ -93,12 +94,13 @@ public class Publication {
     public void setLink(String link) {
         this.link = link;
     }
-
+    public Integer getRate() {return rate;}
+    public void setRate(Integer rate) {this.rate = rate;}
     public Publication() {
         super();
     }
 
-    public Publication(String title, String genre, String publisherName, LocalDateTime date, Boolean ban, String link, String description, int rate) {
+    public Publication(String title, String genre, String publisherName, LocalDateTime date, Boolean ban, String link, String description, Integer rate) {
         super();
         this.title = title;
         this.genre = genre;

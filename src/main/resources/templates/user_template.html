@@ -29,6 +29,7 @@
                 </div>
                 <div>
                     <div th:each="el : ${publications}">
+                        <h3>Публикации, которые вы оценили: </h3>
                         <ul th:if="${el.ban != True}">
                             <li>
                                 <h3 th:text = "${el.title}"/>
