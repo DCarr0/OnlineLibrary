@@ -61,6 +61,23 @@
                                 <button type="submit" >Оставить</button>
                             </form>
                         </div>
+                        <div>
+                            <h3>Общий рейтинг: </h3>
+                            <p th:text = "${el.rate}"/>
+                            <span th:if="${el.rate == 0}">
+                                Нейтральный статус публикации!
+                            </span>
+                            <span th:if="${el.rate > 0}">
+                                Положительный статус публикации!
+                            </span>
+                            <span th:if="${el.rate < 0}">
+                                Отрицательный статус публикации!
+                            </span>
+                            <form th:action="@{/book/details(id=${el.id},action='addRate')}" method="post">
+                                <button type="submit" value="1" name="rate">Лайк</button>
+                                <button type="submit" value="-1" name="rate">ДизЛайк</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

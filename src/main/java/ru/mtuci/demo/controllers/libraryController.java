@@ -12,13 +12,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.mtuci.demo.models.Comment;
 import ru.mtuci.demo.models.Publication;
+import ru.mtuci.demo.models.UserRate;
 import ru.mtuci.demo.repository.CommentRepository;
 import ru.mtuci.demo.repository.PublicationRepository;
+import ru.mtuci.demo.repository.UserRateRepository;
 import ru.mtuci.demo.repository.UserRepository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -36,6 +39,8 @@ public class libraryController {
 
     @Autowired
     private CommentRepository commentRepository;
+    @Autowired
+    private UserRateRepository userRateRepository;
 
     @GetMapping("/main")
     public String main(@RequestParam(name="title", required=false, defaultValue="User") String name, Model model) {
@@ -85,7 +90,9 @@ public class libraryController {
                                  @RequestParam(name="description", required=false) String description,
                                  @RequestParam(name="action", required=false, defaultValue="") String action,
                                  @RequestParam(name="actionCom", required=false, defaultValue="") UUID actionCom,
-                                 @RequestParam(name="commentary", required=false) String commentary, RedirectAttributes redirectAttributes)
+                                 @RequestParam(name="commentary", required=false) String commentary,
+                                 @RequestParam(name = "rate",required = false)int rate,
+                                 RedirectAttributes redirectAttributes)
     {
         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Publication publication = publicationRepository.findById(id).orElseThrow();
@@ -123,6 +130,23 @@ public class libraryController {
             Comment comment = new Comment(commentary,id,name,LocalDateTime.now(),false);
             commentRepository.save(comment);
         }
+        if ("addRate".equals(action)){
+            var userId = userRepository.findUserByEmail(user.getUsername()).getId();
+
+            Iterable<UserRate> userRates = userRateRepository.findByUserId(userId);
+            for (UserRate userrate:userRates) {
+                if (userrate.getPublicationId().equals(id)){
+                    redirectAttributes.addFlashAttribute("message", "Вы уже ставили оценку");
+                    return "redirect:/book/details?id=" + id.toString();
+                }
+            }
+
+            UserRate userRate = new UserRate(userId,id);
+            userRateRepository.save(userRate);
+
+            publication.setRate(publication.getRate() + rate);
+            publicationRepository.save(publication);
+        }
 
         if ("removeCom".equals(action)) {
             if (!user.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("modification"))){
@@ -157,7 +181,7 @@ public class libraryController {
 
         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         var name = userRepository.findUserByEmail(user.getUsername()).getName();
-        Publication publication = new Publication(title,genre,name,LocalDateTime.now(),false,link,description);
+        Publication publication = new Publication(title,genre,name,LocalDateTime.now(),false,link,description,0);
 
         publicationRepository.save(publication);
         return "redirect:/main";
