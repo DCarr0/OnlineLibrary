@@ -27,6 +27,17 @@
                         </ul>
                     </div>
                 </div>
+                <div>
+                    <div th:each="el : ${publications}">
+                        <ul th:if="${el.ban != True}">
+                            <li>
+                                <h3 th:text = "${el.title}"/>
+                                <p th:text = "${el.genre}"/>
+                                <a th:href ="@{/book/details?(id=${el.id})}">Посмотреть публикацию детальнее</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
                 <div class="main_right">
                     <img src="img/book3.png" alt="Oops.." height="835px" width="415px">
                 </div>

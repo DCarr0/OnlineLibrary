@@ -15,8 +15,8 @@
     <section>
       <div class="main_left">
         <div class="redact_add_div">
-        <div class="book_add_error">
-          <div th:if="${message}" th:text="${message}" style="color: red; font-size: 28px;" class="book_add_h1"></div>
+        <div th:if="${message}" class="book_add_error">
+          <div th:text="${message}" style="color: red; font-size: 28px;" class="book_add_h1"></div>
         </div>
         <form th:if="!${message}" action="/book/add" method="post" class="book_add_form">
           <div class="book_add_h1">

@@ -19,7 +19,6 @@ import ru.mtuci.demo.repository.UserRepository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -171,7 +170,10 @@ public class libraryController {
     public String user(Model model) {
         UserDetails  user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("user", userRepository.findUserByEmail(user.getUsername()));
-
+        // передать публикации с паблишер айди этого юзера
+        var name = userRepository.findUserByEmail(user.getUsername()).getName();
+        Iterable<Publication> publications = publicationRepository.findByPublisherName(name);
+        model.addAttribute("publications", publications);
         return "user_template";
     }
     @GetMapping("/")
@@ -187,7 +189,7 @@ public class libraryController {
                 Iterable<Publication> search1 = publicationRepository.findByTitleContainingIgnoreCase(searchString);
                 search1.forEach(searchResults::add);
 
-                Iterable<Publication> search2 = publicationRepository.findByGenre(searchString);
+                Iterable<Publication> search2 = publicationRepository.findByGenreContainingIgnoreCase(searchString);
                 search2.forEach(searchResults::add);
 
                 List<Publication> Results = searchResults.stream()
