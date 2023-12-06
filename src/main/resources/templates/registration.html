@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Registration</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://www.google.com/recaptcha/api.js" type="text/javascript"></script>
+    <script src="https://www.google.com/recaptcha/api.js?hl=ru" type="text/javascript"></script>
 
 </head>
 <section class="content">
@@ -14,7 +14,9 @@
 <section>
             <div class="reg_div">
                 <h1 class="">Register a new account</h1>
-
+                <div th:if="${registrationError}" style="color: red;" class="book_add_h1">
+                    <p th:text="${registrationError}"></p>
+                </div>
                 <form action="/registration" th:action="@{/registration}" th:object="${userData}" method="post">
                     <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
                         <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
@@ -39,7 +41,7 @@
                             <input name="no" type="radio" value="false" class="" th:field="*{requestToRedactor}"> Нет.
                         </fieldset >
                     </div>
-                    <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
+                    <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" ></div>
                     <div><input type="submit" class="auth_button" value="Зарегистрироваться"/></div>
                 </form>
             </div>

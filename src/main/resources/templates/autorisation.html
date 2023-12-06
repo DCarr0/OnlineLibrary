@@ -7,36 +7,36 @@
 </head>
 <section class ="content">
 <body>
-<header th:insert="blocks/header :: header"></header>
+    <header th:insert="blocks/header :: header"></header>
 
-<main>
-    <section>
-        <div style="margin: 0 auto">
-    <div class="auth_div">
-    <h1>Привет, это авторизация!</h1>
-    <div th:if="${param.error}">
-        <p>Invalid username and password</p></div>
-    <div th:if="${param.logout}">
-        <p>You have been logged out</p></div>
+    <main>
+        <section>
+            <div style="margin: 0 auto">
+        <div class="auth_div">
+        <h1>Привет, это авторизация!</h1>
+        <div th:if="${param.error}">
+            <p>Invalid username and password</p></div>
+        <div th:if="${param.logout}">
+            <p>You have been logged out</p></div>
 
-    <form th:action="@{/autorisation}" method="post">
-        <div>
-            <input type="email" name="username" placeholder="Email" class="auth_textarea"/>
+        <form id="loginForm" th:action="@{/autorisation}" method="post">
+            <div>
+                <input type="email" name="username" placeholder="Email" class="auth_textarea"/>
+            </div>
+            <div>
+                <input type="password" name="password" placeholder="Password" class="auth_textarea"/>
+            </div>
+            <button type="submit" class="auth_button">Войти</button>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </form>
         </div>
-        <div>
-            <input type="password" name="password" placeholder="Password" class="auth_textarea"/>
+        <div class="auth_redirectToRegistration">
+            <h1>Не зарегистрированы?</h1>
+            <a href="/registration"><p>Нажмите для регистрации</p></a>
         </div>
-        <input type="submit" value="Войти" class="auth_button"/>
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-    </form>
-    </div>
-    <div class="auth_redirectToRegistration">
-        <h1>Не зарегистрированы?</h1>
-        <a href="/registration"><p>Нажмите для регистрации</p></a>
-    </div>
-        </div>
-    </section>
-</main>
+            </div>
+        </section>
+    </main>
 
 
 </body>

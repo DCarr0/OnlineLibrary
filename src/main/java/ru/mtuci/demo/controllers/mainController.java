@@ -12,6 +12,9 @@ import ru.mtuci.demo.exceptions.UserAlreadyExistException;
 import ru.mtuci.demo.models.UserData;
 import ru.mtuci.demo.service.UserRegistrationService;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 @Controller
 public class mainController {
@@ -33,16 +36,19 @@ public class mainController {
 
     @PostMapping("/registration")
     public String userRegistration(final @Valid UserData userData, final BindingResult bindingResult, final Model model){
-        if(bindingResult.hasErrors()){
-            model.addAttribute("registrationForm", userData);
-            return "/registration";
+        String password = userData.getPassword();
+        Pattern uppercasePattern = Pattern.compile("[A-Z]");
+        Matcher uppercaseMatcher = uppercasePattern.matcher(password);
+        if (password.length() < 8 || !uppercaseMatcher.find()) {
+            model.addAttribute("registrationError", "Пароль должен быть длиной не менее 8 символов и соддержать символы верхнего и нижнего регистра!");
+            return "registration";
         }
+
         try {
             userRegistrationService.registration(userData);
         }catch (UserAlreadyExistException e){
-            bindingResult.rejectValue("email", "userData.email","An account already exists for this email.");
-            model.addAttribute("registrationForm", userData);
-            return "/registration";
+            model.addAttribute("registrationError", "Учетная запись для этого адреса электронной почты уже существует.");
+            return "registration";
         }
         return "redirect:/main";
     }

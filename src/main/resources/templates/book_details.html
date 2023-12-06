@@ -34,8 +34,8 @@
                                 <p th:text = "${el.date}"/>
                                 <p><a th:href ="${el.link}">Ссылка на источник</a></p>
                                 <div class="book_description"><p th:text = "${el.description}"></p></div>
-                                <a th:href="@{/book/details(id=${el.id},action='redact')}" sec:authorize="hasAuthority('modification')">Редактировать</a>
-                                <form th:action="@{/book/details?(id=${el.id},action='remove')}" sec:authorize="hasAuthority('ADMIN') or hasAuthority('delete')" method="post">
+                                <a th:href="@{/book/details(id=${el.id},action='redact')}" th:if="${hasModificationRole}">Редактировать</a>
+                                <form th:action="@{/book/details?(id=${el.id},action='remove')}" th:if="${hasDeleteRole}" method="post">
                                     <button onclick="return confirmDeletePublication();" type="submit">Удалить</button>
                                 </form>
                             </li>
@@ -47,7 +47,7 @@
                                     <h3 th:text = "${com.publisherName}" />
                                     <p th:text = "${com.date}" />
                                     <div th:text = "${com.commentary}"></div>
-                                    <form th:action="@{/book/details(id=${el.id},actionCom = ${com.id},action='removeCom')}" sec:authorize="hasRole('ADMIN')" method="post">
+                                    <form th:action="@{/book/details(id=${el.id},actionCom = ${com.id},action='removeCom')}" th:if="${hasModificationRole}" method="post">
                                         <button onclick="return confirmDeleteComment();" type="submit" >Удалить</button>
                                     </form>
                                 </li>
@@ -56,8 +56,8 @@
 
                         <div>
                             <form th:action="@{/book/details(id=${el.id},action='addCom')}" method="post">
-                                <h4>Оставьте свой комментарий по этой публикации!</h4>
-                                <textarea rows="4" cols="50" name="commentary" placeholder="Введите свой комментарий:" id="book_add_form_textarea_description" minlength="1" maxlength="255" ></textarea>
+                                <h3>Оставьте свой комментарий по этой публикации!</h3>
+                                <textarea rows="4" cols="50" name="commentary" placeholder="Введите свой комментарий:" class="book_add_form_textarea_description" minlength="1" maxlength="255" ></textarea>
                                 <button type="submit" >Оставить</button>
                             </form>
                         </div>

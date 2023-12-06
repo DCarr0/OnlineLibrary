@@ -62,7 +62,14 @@ public class libraryController {
         List<Comment> comments = commentRepository.findByPublicationId(id);
         model.addAttribute("comments", comments);
 
-        if ("redact".equals(action)) {
+        UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        boolean hasModificationRole = user.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("modification"));
+        boolean hasDeleteRole = user.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("delete"));
+
+        model.addAttribute("hasModificationRole", hasModificationRole);
+        model.addAttribute("hasDeleteRole", hasDeleteRole);
+
+            if ("redact".equals(action)) {
             return "book_details_redact";
         }
 
