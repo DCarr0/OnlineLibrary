@@ -130,7 +130,7 @@ public class libraryController {
             Iterable<UserRate> userRates = userRateRepository.findByUserId(userId);
             for (UserRate userrate:userRates) {
                 if (userrate.getPublicationId().equals(id)){
-                    redirectAttributes.addFlashAttribute("message", "Вы уже ставили оценку");
+                    redirectAttributes.addFlashAttribute("message", "Вы уже ставили оценку!");
                     return "redirect:/book/details?id=" + id.toString();
                 }
             }
