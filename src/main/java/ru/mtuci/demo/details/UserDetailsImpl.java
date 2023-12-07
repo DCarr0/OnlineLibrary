@@ -43,10 +43,6 @@ public class UserDetailsImpl implements UserDetails {
                 .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
                 .collect(Collectors.toList());
 
-        if (authorities.isEmpty()) {
-            System.out.println("No roles found for user with name " + user.getName());
-        }
-        System.out.println("Roles for user with name " + user.getName() + ": " + authorities);
         return new UserDetailsImpl (user.getEmail(),
                 user.getPassword(),
                 authorities,

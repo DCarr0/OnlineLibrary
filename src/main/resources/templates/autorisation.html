@@ -19,7 +19,7 @@
         <div th:if="${param.logout}">
             <p>You have been logged out</p></div>
 
-        <form id="loginForm" th:action="@{/autorisation}" method="post">
+        <form th:action="@{/autorisation}" method="post">
             <div>
                 <input type="email" name="username" placeholder="Email" class="auth_textarea"/>
             </div>
@@ -37,9 +37,7 @@
             </div>
         </section>
     </main>
-
-
-</body>
+    </body>
 </section>
 <footer th:insert="blocks/footer :: footer"></footer>
 </html>
