@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Admin Panel</title>
+    <title>Moderator Panel</title>
     <link rel="stylesheet" href="../style.css">
     <style>
         main {
@@ -105,7 +105,7 @@
 <section class="content">
     <header th:insert="../templates/blocks/header :: header"></header>
     <main>
-        <h2>Admin Panel</h2>
+        <h2>Moderator Panel</h2>
         <div th:if="${errorMessege}" th:text="${errorMessege}" style="color: red; font-size: 25px;" class="book_add_h1"></div>
         <h3>Users</h3>
         <table class="table">
@@ -115,10 +115,7 @@
                 <th>Role</th>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Date</th>
                 <th>Application for redactor</th>
-                <th>Status</th>
-                <th>Action</th>
                 <th>Get role</th>
             </tr>
             </thead>
@@ -128,59 +125,15 @@
                 <td th:text="${el.role}"></td>
                 <td th:text="${el.name}"></td>
                 <td th:text="${el.email}"></td>
-                <td th:text="${el.date}"></td>
                 <td th:text="${el.requestToRedactor ? 'Подана заявка' : 'Нет заявки'}"></td>
-                <td th:text="${el.ban ? 'Заблокирован' : 'Активен'}"></td>
                 <td>
-                    <form th:action="@{/adminPanel}" method="post">
-                        <input type="hidden" name="userId" th:value="${el.id}" />
-                        <button onclick="return confirmBlock();" type="submit" class="btnBan" th:classappend="${el.ban ? 'btn-unblock' : 'btn-block'}" th:text="${el.ban ? 'Разблокировать' : 'Заблокировать'}"></button>
-                    </form>
-                </td>
-                <td>
-                    <form th:action="@{/adminPanel}" method="post">
+                    <form th:action="@{/moderatorPanel}" method="post">
                         <input type="hidden" name="userId" th:value="${el.id}" />
                         <select name="newRole">
                             <option th:value="USER">User</option>
                             <option th:value="REDACTOR">Redactor</option>
-                            <option th:value="MODERATOR">Moderator</option>
                         </select>
                         <button onclick="return confirmSetRole();" type="submit" class="btnRole">Set Role</button>
-                    </form>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-
-        <h3>Publications</h3>
-        <table class="table">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Genre</th>
-                <th>Publisher name</th>
-                <th>Date</th>
-                <th>Link</th>
-                <th>Rate</th>
-                <th>Status</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="el : ${publications}">
-                <td th:text="${el.id}"></td>
-                <td th:text="${el.title}"></td>
-                <td th:text="${el.genre}"></td>
-                <td th:text="${el.publisherName}"></td>
-                <td th:text="${el.date}"></td>
-                <td><a th:text="${el.link}"></a></td>
-                <td th:text="${el.rate}"></td>
-                <td th:text="${el.ban ? 'Заблокирован' : 'Опубликован'}"></td>
-                <td>
-                    <form th:action="@{/adminPanel}" method="post">
-                        <input type="hidden" name="publicationId" th:value="${el.id}" />
-                        <button onclick="return confirmBlock();" type="submit" class="btnBan" th:classappend="${el.ban ? 'btn-unblock' : 'btn-block'}" th:text="${el.ban ? 'Разблокировать' : 'Заблокировать'}"></button>
                     </form>
                 </td>
             </tr>

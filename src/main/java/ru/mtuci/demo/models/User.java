@@ -28,11 +28,6 @@ public class User {
     private Boolean requestToRedactor;
     private LocalDateTime date;
     private Boolean ban;
-//    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @JoinTable(name = "users_roles",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "role_id"))
-//    private Set<Role> roles;
     @Enumerated(EnumType.STRING)
     private UserRole role;
 

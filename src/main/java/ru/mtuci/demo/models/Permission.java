@@ -8,7 +8,8 @@ import lombok.Getter;
 public enum Permission {
     READ("read"),
     DELETE("delete"),
-    MODIFICATION("modification");
+    MODIFICATION("modification"),
+    CREATE("create");
 
     private final String permission;
 }

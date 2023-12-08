@@ -12,8 +12,9 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public enum UserRole {
     USER(Set.of(Permission.READ)),
-    MODERATOR(Set.of(Permission.READ,Permission.MODIFICATION)),
-    ADMIN(Set.of(Permission.READ, Permission.MODIFICATION, Permission.DELETE));
+    REDACTOR(Set.of(Permission.READ,Permission.CREATE)),
+    MODERATOR(Set.of(Permission.READ, Permission.CREATE,Permission.MODIFICATION)),
+    ADMIN(Set.of(Permission.READ, Permission.CREATE, Permission.MODIFICATION, Permission.DELETE));
     @Getter
     private final Set<Permission> permissions;
     public List<SimpleGrantedAuthority> grantedAuthority() {

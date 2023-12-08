@@ -9,10 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import ru.mtuci.demo.models.Comment;
-import ru.mtuci.demo.models.Publication;
-import ru.mtuci.demo.models.User;
-import ru.mtuci.demo.models.UserRate;
+import ru.mtuci.demo.models.*;
 import ru.mtuci.demo.repository.CommentRepository;
 import ru.mtuci.demo.repository.PublicationRepository;
 import ru.mtuci.demo.repository.UserRateRepository;
@@ -161,8 +158,7 @@ public class libraryController {
     @GetMapping("/book/add")
     public String bookAdd(Model model) {
         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        var flag = userRepository.findUserByEmail(user.getUsername()).getRequestToRedactor();
-        if (!flag) {
+        if (!user.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("create"))) {
             model.addAttribute("message", "Вы не можете добавлять книги, так как не являетесь редактором!");
         }
         return "book_add";}
@@ -186,9 +182,14 @@ public class libraryController {
         this.userRepository = userRepository;
     }
     @GetMapping("/user")
-    public String user(Model model) {
+    public String userGet(Model model) {
         UserDetails  user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        boolean isModerator = userRepository.findUserByEmail(user.getUsername()).getRole().toString().equals("MODERATOR");
+        boolean isAdmin = userRepository.findUserByEmail(user.getUsername()).getRole().toString().equals("ADMIN");
+
         model.addAttribute("user", userRepository.findUserByEmail(user.getUsername()));
+        model.addAttribute("isModerator", isModerator);
+        model.addAttribute("isAdmin", isAdmin);
 
         var id = userRepository.findUserByEmail(user.getUsername()).getId();
         Iterable<UserRate> userRates = userRateRepository.findByUserId(id);
@@ -208,6 +209,56 @@ public class libraryController {
         return "user_template";
     }
 
+    @PostMapping("/user")
+    public String userPost(@RequestParam(name="userId", required=false) UUID userId,
+                           @RequestParam(name="requestToRedactor", required=false) Boolean requestToRedactor,
+                           RedirectAttributes redirectAttributes) {
+        if(requestToRedactor != null){
+            User user = userRepository.findById(userId).orElseThrow();
+            if (user.getRequestToRedactor().equals(true) && requestToRedactor){
+                redirectAttributes.addFlashAttribute("errorMessege","Вы уже ранее подавали заявку на редактора!");
+                return "redirect:/user";
+            }
+            user.setRequestToRedactor(requestToRedactor);
+            userRepository.save(user);
+        }
+
+        redirectAttributes.addFlashAttribute("messege","Заявка отправлена на рассмотрение!");
+        return "redirect:/user";
+    }
+
+    @GetMapping("/moderatorPanel")
+    public String moderatorPanelGet(Model model){
+        UserDetails  user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (!(user.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("modification")))) return "redirect:/main";
+
+        Iterable<User> users = userRepository.findAll();
+        model.addAttribute("users",users);
+
+        return "moderator_panel";
+    }
+
+    @PostMapping("/moderatorPanel")
+    public String moderatorPanelPost(@RequestParam(name="userId", required=false) UUID userId,
+                                 @RequestParam(name="newRole", required=false) String newRole,
+                                 RedirectAttributes redirectAttributes){
+        if(newRole != null) {
+            User user = userRepository.findById(userId).orElseThrow();
+            if (user.getRole().toString().equals(newRole)){
+                redirectAttributes.addFlashAttribute("errorMessege","Юзер уже имеет эту роль!!!");
+                return "redirect:/moderatorPanel";
+            }
+            if (user.getRole().toString().equals("MODERATOR") || user.getRole().toString().equals("ADMIN")){
+                redirectAttributes.addFlashAttribute("errorMessege","Вы не имеете таких прав!!!");
+                return "redirect:/moderatorPanel";
+            }
+            user.setRole(UserRole.valueOf(newRole));
+            userRepository.save(user);
+        }
+
+        return "redirect:/moderatorPanel";
+    }
+
     @GetMapping("/adminPanel")
     public String adminPanelGet(Model model){
         UserDetails  user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -225,8 +276,18 @@ public class libraryController {
     @PostMapping("/adminPanel")
     public String adminPanelPost(@RequestParam(name="userId", required=false) UUID userId,
                                  @RequestParam(name="publicationId", required=false) UUID publicationId,
-                                 Model model){
-        if (userId != null) {
+                                 @RequestParam(name="newRole", required=false) String newRole,
+                                 RedirectAttributes redirectAttributes){
+        if(newRole != null) {
+            User user = userRepository.findById(userId).orElseThrow();
+            if (user.getRole().toString().equals(newRole)){
+                redirectAttributes.addFlashAttribute("errorMessege","Юзер уже имеет эту роль!!!");
+                return "redirect:/adminPanel";
+            }
+            user.setRole(UserRole.valueOf(newRole));
+            userRepository.save(user);
+        }
+        else if (userId != null) {
             User user = userRepository.findById(userId).orElseThrow();
             user.setBan(!user.getBan());
             userRepository.save(user);

@@ -14,8 +14,9 @@
         <header th:insert="../templates/blocks/header :: header"></header>
         <main>
             <section>
-                <div class="user_info">
-                    <div th:each="el : ${user}">
+                <div th:if="${errorMessege}" th:text="${errorMessege}" style="color: red; front-size: 24;" class="book_add_h1"></div>
+                <div class="user_info" th:each="el : ${user}">
+                    <div>
                         <ul>
                             <li>
                                 <h1> Добро пожаловать! </h1>
@@ -26,6 +27,22 @@
                             </li>
                         </ul>
                     </div>
+                    <div th:if="${isModerator}">
+                        <a th:href="@{/moderatorPanel}">Панель управления</a>
+                    </div>
+                    <div th:if="${isAdmin}">
+                        <a th:href="@{/adminPanel}">Панель управления</a>
+                    </div>
+                    <form th:action="@{/user}" method="post">
+                        <input type="hidden" name="userId" th:value="${el.id}" />
+                        <h3>Вы хотите подать заявку на редактора?</h3>
+                        <select name="requestToRedactor">
+                            <option th:value="true">Да</option>
+                            <option th:value="false">Нет</option>
+                        </select>
+                        <button type="submit">Подать заявку</button>
+                    </form>
+                    <div th:if="${messege}" th:text="${messege}" style="color: green; front-size: 24;" class="book_add_h1"></div>
                 </div>
                 <div>
                     <div th:each="el : ${publications}">
