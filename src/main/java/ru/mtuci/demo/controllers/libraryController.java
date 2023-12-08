@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.mtuci.demo.models.Comment;
 import ru.mtuci.demo.models.Publication;
+import ru.mtuci.demo.models.User;
 import ru.mtuci.demo.models.UserRate;
 import ru.mtuci.demo.repository.CommentRepository;
 import ru.mtuci.demo.repository.PublicationRepository;
@@ -206,6 +207,38 @@ public class libraryController {
 
         return "user_template";
     }
+
+    @GetMapping("/adminPanel")
+    public String adminPanelGet(Model model){
+        UserDetails  user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (!(user.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("delete")))) return "redirect:/main";
+
+        Iterable<User> users = userRepository.findAll();
+        model.addAttribute("users",users);
+
+        Iterable<Publication> publications = publicationRepository.findAll();
+        model.addAttribute("publications", publications);
+
+        return "admin_panel";
+    }
+
+    @PostMapping("/adminPanel")
+    public String adminPanelPost(@RequestParam(name="userId", required=false) UUID userId,
+                                 @RequestParam(name="publicationId", required=false) UUID publicationId,
+                                 Model model){
+        if (userId != null) {
+            User user = userRepository.findById(userId).orElseThrow();
+            user.setBan(!user.getBan());
+            userRepository.save(user);
+        } else if (publicationId != null) {
+            Publication publication = publicationRepository.findById(publicationId).orElseThrow();
+            publication.setBan(!publication.getBan());
+            publicationRepository.save(publication);
+        }
+
+        return "redirect:/adminPanel";
+    }
+
     @GetMapping("/")
     public String welcome() {
         return "../static/index.html";

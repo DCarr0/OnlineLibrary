@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        main {
+            text-align: center;
+        }
+
+        h2 {
+            background-color: #006699;
+            color: white;
+            padding: 10px;
+        }
+
+        h3 {
+            text-align: left;
+            background-color: #f2f2f2;
+            padding: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .btnBan {
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+
+        }
+        .btn-unblock {
+            background-color: green;
+            border: 1px solid green;
+        }
+
+        .btn-block {
+            background-color: #d9534f;
+            border: 1px solid #d9534f;
+        }
+        .btnBan:hover {
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+
+<section class="content">
+    <header th:insert="../templates/blocks/header :: header"></header>
+    <main>
+        <h2>Admin Panel</h2>
+
+        <h3>Users</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Role</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="el : ${users}">
+                <td th:text="${el.id}"></td>
+                <td th:text="${el.role}"></td>
+                <td th:text="${el.name}"></td>
+                <td th:text="${el.email}"></td>
+                <td th:text="${el.date}"></td>
+                <td th:text="${el.ban ? 'Заблокирован' : 'Активен'}"></td>
+                <td>
+                    <form th:action="@{/adminPanel}" method="post">
+                        <input type="hidden" name="userId" th:value="${el.id}" />
+                        <button type="submit" class="btnBan" th:classappend="${el.ban ? 'btn-unblock' : 'btn-block'}" th:text="${el.ban ? 'Разблокировать' : 'Заблокировать'}"></button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <h3>Publications</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Genre</th>
+                <th>Publisher name</th>
+                <th>Date</th>
+                <th>Link</th>
+                <th>Rate</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="el : ${publications}">
+                <td th:text="${el.id}"></td>
+                <td th:text="${el.title}"></td>
+                <td th:text="${el.genre}"></td>
+                <td th:text="${el.publisherName}"></td>
+                <td th:text="${el.date}"></td>
+                <td><a th:text="${el.link}"></a></td>
+                <td th:text="${el.rate}"></td>
+                <td th:text="${el.ban ? 'Заблокирован' : 'Опубликован'}"></td>
+                <td>
+                    <form th:action="@{/adminPanel}" method="post">
+                        <input type="hidden" name="publicationId" th:value="${el.id}" />
+                        <button type="submit" class="btnBan" th:classappend="${el.ban ? 'btn-unblock' : 'btn-block'}" th:text="${el.ban ? 'Разблокировать' : 'Заблокировать'}"></button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </main>
+</section>
+<footer th:insert="../templates/blocks/footer :: footer"></footer>
+</body>
+</html>
