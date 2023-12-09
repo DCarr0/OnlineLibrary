@@ -23,61 +23,73 @@
         <section>
             <div class="main_left">
                 <div class="main_left_content">
+                    <div th:each="el : ${publication}" class="publication_detail">
+                        <div class="book_wraper">
+                        <div class="book_detail_head">
 
-                    <div th:each="el : ${publication}">
-                        <div th:if="${message}" th:text="${message}" style="color: red;" class="book_add_h1"></div>
-                        <ul th:if="${el.ban != True}">
+                        <ul th:if="${el.ban != True}" class="book_details">
                             <li>
                                 <h3> <p th:text = "${el.title}"/> </h3>
-                                <p th:text = "${el.genre}"/>
-                                <p th:text = "${el.publisherName}"/>
-                                <p th:text = "${el.date}"/>
+                                <p>Жанр: <span th:text = "${el.genre}"></span></p>
+                                <p>Автор: <span th:text = "${el.publisherName}"></span></p>
+                                <p>Дата создания публикации</p>
+                                <span th:text = "${el.date}"></span>
                                 <p><a th:href ="${el.link}">Ссылка на источник</a></p>
-                                <div class="book_description"><p th:text = "${el.description}"></p></div>
+
                                 <a th:href="@{/book/details(id=${el.id},action='redact')}" th:if="${hasModificationRole}">Редактировать</a>
                                 <form th:action="@{/book/details?(id=${el.id},action='remove')}" th:if="${hasDeleteRole}" method="post">
-                                    <button onclick="return confirmDeletePublication();" type="submit">Удалить</button>
+                                    <button onclick="return confirmDeletePublication();" type="submit" class="comment_btn">Удалить</button>
                                 </form>
                             </li>
                         </ul>
-
+                        <div class="rate">
+                            <h3>Рейтинг </h3>
+                            <p th:text = "${el.rate}"/>
+                            <span th:if="${el.rate == 0}">
+                                Нейтральный статус!
+                            </span>
+                            <span th:if="${el.rate > 0}">
+                                Положительный статус!
+                            </span>
+                            <span th:if="${el.rate < 0}">
+                                Отрицательный статус!
+                            </span>
+                            <form th:action="@{/book/details(id=${el.id},action='addRate')}" method="post">
+                                <button type="submit" value="1" name="rate" class="comment_btn1">Нравится</button>
+                                <button type="submit" value="-1" name="rate" class="comment_btn2">Не нравится</button>
+                            </form>
+                            <div th:if="${message}" th:text="${message}" style="color: red;" class="error_bookdetails"></div>
+                        </div>
+                        </div>
+                        <div class="book_description">
+                            <h3>Описание </h3>
+                            <p th:text = "${el.description}"></p></div>
+                        </div>
+                        <div class="comments">
+                        <h1>Комментарии</h1>
                         <div th:each="com : ${comments}" class="coms">
-                            <ul th:if="${com.ban != True} and ${el.ban != True}">
+                            <ul th:if="${com.ban != True} and ${el.ban != True}" class="comment">
                                 <li>
                                     <h3 th:text = "${com.publisherName}" />
                                     <p th:text = "${com.date}" />
                                     <div th:text = "${com.commentary}"></div>
                                     <form th:action="@{/book/details(id=${el.id},actionCom = ${com.id},action='removeCom')}" th:if="${hasModificationRole}" method="post">
-                                        <button onclick="return confirmDeleteComment();" type="submit" >Удалить</button>
+                                        <button onclick="return confirmDeleteComment();" type="submit" class="comment_btn" >Удалить</button>
                                     </form>
                                 </li>
                             </ul>
+                        
                         </div>
+                        </div>
+                        <div>
+                            <form th:action="@{/book/details(id=${el.id},action='addCom')}" method="post" class="comment_form">
+                                <h3>Оставьте свой комментарий к этой публикации!</h3>
+                                <textarea rows="4" cols="50" name="commentary" placeholder="Введите свой комментарий:" class="comment_text" minlength="1" maxlength="255" ></textarea>
+                                <button type="submit" class="comment_btn">Оставить</button>
+                            </form>
+                        </div>
+                        
 
-                        <div>
-                            <form th:action="@{/book/details(id=${el.id},action='addCom')}" method="post">
-                                <h3>Оставьте свой комментарий по этой публикации!</h3>
-                                <textarea rows="4" cols="50" name="commentary" placeholder="Введите свой комментарий:" class="book_add_form_textarea_description" minlength="1" maxlength="255" ></textarea>
-                                <button type="submit" >Оставить</button>
-                            </form>
-                        </div>
-                        <div>
-                            <h3>Общий рейтинг: </h3>
-                            <p th:text = "${el.rate}"/>
-                            <span th:if="${el.rate == 0}">
-                                Нейтральный статус публикации!
-                            </span>
-                            <span th:if="${el.rate > 0}">
-                                Положительный статус публикации!
-                            </span>
-                            <span th:if="${el.rate < 0}">
-                                Отрицательный статус публикации!
-                            </span>
-                            <form th:action="@{/book/details(id=${el.id},action='addRate')}" method="post">
-                                <button type="submit" value="1" name="rate">Лайк</button>
-                                <button type="submit" value="-1" name="rate">ДизЛайк</button>
-                            </form>
-                        </div>
                     </div>
                 </div>
             </div>
