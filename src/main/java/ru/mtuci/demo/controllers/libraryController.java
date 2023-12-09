@@ -222,8 +222,10 @@ public class libraryController {
             user.setRequestToRedactor(requestToRedactor);
             userRepository.save(user);
         }
-
-        redirectAttributes.addFlashAttribute("messege","Заявка отправлена на рассмотрение!");
+        if (requestToRedactor)
+            redirectAttributes.addFlashAttribute("messege","Заявка отправлена на рассмотрение, модератор рассмотрит её ближайшее время!");
+        else
+            redirectAttributes.addFlashAttribute("messege","Вы решили отказаться быть редактором, в ближайшее время модератор одобрит вашу заявку!");
         return "redirect:/user";
     }
 
