@@ -6,198 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Personal account</title>
-    <style>
-        .content {
-            height: 100%;
-            min-height: 900px;
-        }
-
-        main {
-            width: 100%;
-        }
-
-        main section {
-            max-width: 1920px;
-            margin: 0 auto;
-            display: flex;
-            min-height: calc(100vh - 107px);
-            height: 100%;
-        }
-
-        a {
-            text-decoration: none;
-        }
-
-        a:visited {
-            color: darkblue;
-        }
-
-        a:link {
-            color: darkblue;
-        }
-
-        a:hover {
-            color: rgb(0, 191, 255);
-        }
-
-        .user_info {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            width: 1100px;
-            max-width: 1100px;
-            margin: 0 auto;
-            margin-top: 100px;
-        }
-
-        .user_info > div {
-            flex: 1;
-            margin-right: 20px;
-        }
-
-        .user_info .publications_info {
-            flex: 1;
-            margin-top: 20px;
-            display: flex;
-            flex-direction: row;
-        }
-
-        .user_info .publications_info div {
-            width: 100%;
-            margin-bottom: 20px;
-        }
-
-        .user_info .publications_info h3 {
-            font-size: 24px;
-            color: #333;
-            margin-bottom: 10px;
-        }
-
-        .user_info .publications_info p {
-            font-size: 16px;
-            color: #777;
-        }
-
-        .user_info .publications_info a {
-            color: #3498db;
-            text-decoration: none;
-        }
-
-        .user_info .publications_info a:hover {
-            text-decoration: underline;
-            color: #2574a9;
-        }
-
-        .user_info h1 {
-            margin-bottom: 10px;
-            font-size: 28px;
-            color: #333;
-        }
-
-        .user_info h3 {
-            font-size: 20px;
-            color: #555;
-            margin-bottom: 15px;
-        }
-
-        .user_info p {
-            font-size: 16px;
-            color: #333;
-            margin-bottom: 10px;
-        }
-
-        .user_info a {
-            color: #3498db;
-            text-decoration: none;
-        }
-
-        .user_info select {
-            font-size: 16px;
-            padding: 8px;
-            margin-top: 10px;
-            width: 20%;
-        }
-
-        .user_info button {
-            font-size: 16px;
-            padding: 8px;
-            margin-top: 10px;
-        }
-
-        .user_info button {
-            background-color: #3498db;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        .user_info button:hover {
-            background-color: #45a049;
-        }
-
-        .user_info ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .user_info ul li {
-            margin-bottom: 15px;
-        }
-
-        .user_info ul li a {
-            color: #3498db;
-            text-decoration: none;
-        }
-
-        .user_info ul li a:hover {
-            text-decoration: underline;
-            color: #2574a9;
-        }
-
-        .user_info div a {
-            display: block;
-            margin-top: 10px;
-        }
-
-        .user_info .moderator-panel,
-        .user_info .admin-panel {
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-
-        .user_info .moderator-panel a,
-        .user_info .admin-panel a {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #3498db;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-right: 10px;
-        }
-
-        .user_info button,
-        .user_info select,
-        .user_info .moderator-panel a,
-        .user_info .admin-panel a {
-            transition: background-color 0.3s ease;
-        }
-
-        .user_info button:hover,
-        .user_info select:hover,
-        .user_info .moderator-panel a:hover,
-        .user_info .admin-panel a:hover {
-            background-color: #45a049;
-            color: #fff;
-        }
-
-    </style>
+    <title>Личный кабинет</title>
 </head>
 
 <body>
@@ -206,47 +15,51 @@
     <main>
         <section>
             <div class="user_info">
-                <div th:each="el : ${user}">
-                    <ul>
+                <div th:each="el : ${user}" class="user">
+                    <ul class="user_head">
                         <li>
                             <h1> Добро пожаловать! </h1>
                             <h3 th:text="${el.name}" style="text-decoration: underline;"></h3>
                             <p> Ваша почта: <span th:text="${el.email}"></span></p>
                             <p> Вы зарегистрировались на нашем сайте: <span th:text="${el.date}"></span></p>
-                            <p> Вы имеете роль: <span th:text="${el.role}"></span></p>
+                            <p> Вы имеете роль: <span th:text="${el.role}"></span>
+                <div class="moderator-panel" th:if="${isModerator}">
+                    <a th:href="@{/moderatorPanel}">Панель управления</a>
+                </div>
+                <div class="admin-panel" th:if="${isAdmin}">
+                    <a th:href="@{/adminPanel}">Панель управления</a>
+                </div></p>
                         </li>
+
                     </ul>
-                    <form th:action="@{/user}" method="post">
+
+                    <form th:action="@{/user}" method="post" class="red_req">
                         <input type="hidden" name="userId" th:value="${el.id}" />
                         <h3>Вы хотите подать заявку на редактора?</h3>
                         <select name="requestToRedactor">
                             <option th:value="true">Да</option>
                             <option th:value="false">Нет</option>
                         </select>
-                        <button type="submit">Подать заявку</button>
+                        <button type="submit" class="user_btn">Подать заявку</button>
                     </form>
-                    <div class="moderator-panel" th:if="${isModerator}">
-                        <a th:href="@{/moderatorPanel}">Панель управления</a>
-                    </div>
-                    <div class="admin-panel" th:if="${isAdmin}">
-                        <a th:href="@{/adminPanel}">Панель управления</a>
-                    </div>
                     <div th:if="${errorMessege}" th:text="${errorMessege}" style="color: red; font-size: 28;"></div>
                     <div th:if="${messege}" th:text="${messege}" style="color: green; font-size: 28;"></div>
-                    <h3>Публикации, которые вы оценили: </h3>
-                    <div th:if="${#lists.isEmpty(publications)}" style="color: blue; font-size: 28;">
-                        Вы ещё не оценили ни одной публикации!
-                    </div>
+                    <div class="publications_info_head">
+                        <h2>Оценённые публикации</h2>
+                        <div th:if="${#lists.isEmpty(publications)}" style="color: blue; font-size: 28;">
+                            Вы ещё не оценили ни одной публикации!
+                        </div>
                     <div class="publications_info">
-                        <div th:each="el : ${publications}">
-                            <ul th:if="${el.ban != True}">
+                        <div th:each="el : ${publications}" class="publication_rated_parent">
+                            <ul th:if="${el.ban != True}" class="publication_rated">
                                 <li>
-                                    <h3 th:text="${el.title}"></h3>
-                                    <p th:text="${el.genre}"></p>
+                                    <h3 th:text="${el.title}" class="book_name"></h3>
+                                    <p th:text="${el.genre}" class="genre"></p>
                                     <a th:href="@{/book/details?(id=${el.id})}">Посмотреть публикацию детальнее</a>
                                 </li>
                             </ul>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>
