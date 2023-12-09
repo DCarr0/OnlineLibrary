@@ -23,7 +23,7 @@
                 <div class="main_left_content">
                     <h1>Каталог</h1>
                     <div th:each="el : ${publications}">
-                        <ul th:if="${el.ban != True}">
+                        <ul th:if="${el.ban != True}" class="main_ul">
                             <li>
                                 <h3 th:text = "${el.title}"/>
                                 <p th:text = "${el.genre}"/>
