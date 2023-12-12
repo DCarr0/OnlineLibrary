@@ -128,7 +128,7 @@
                 <td th:text="${el.role}"></td>
                 <td th:text="${el.name}"></td>
                 <td th:text="${el.email}"></td>
-                <td th:text="${el.date}"></td>
+                <td th:text="${#temporals.format(el.date, 'yyyy-MM-dd HH:mm:ss')}"></td>
                 <td th:text="${el.requestToRedactor ? 'Подана заявка' : 'Нет заявки'}"></td>
                 <td th:text="${el.ban ? 'Заблокирован' : 'Активен'}"></td>
                 <td>
@@ -173,7 +173,7 @@
                 <td th:text="${el.title}"></td>
                 <td th:text="${el.genre}"></td>
                 <td th:text="${el.publisherName}"></td>
-                <td th:text="${el.date}"></td>
+                <td th:text="${#temporals.format(el.date, 'dd.MM.yy HH:mm:ss')}"></td>
                 <td><a th:text="${el.link}"></a></td>
                 <td th:text="${el.rate}"></td>
                 <td th:text="${el.ban ? 'Заблокирован' : 'Опубликован'}"></td>

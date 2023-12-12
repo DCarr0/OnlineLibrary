@@ -21,7 +21,7 @@
                             <h1> Добро пожаловать! </h1>
                             <h3 th:text="${el.name}" style="text-decoration: underline;"></h3>
                             <p> Ваша почта: <span th:text="${el.email}"></span></p>
-                            <p> Вы зарегистрировались на нашем сайте: <span th:text="${el.date}"></span></p>
+                            <p> Вы зарегистрировались на нашем сайте: <span th:text="${#temporals.format(el.date, 'dd.MM.yy HH:mm:ss')}"></span></p>
                             <p> Вы имеете роль: <span th:text="${el.role}"></span>
                 <div class="moderator-panel" th:if="${isModerator}">
                     <a th:href="@{/moderatorPanel}">Панель управления</a>

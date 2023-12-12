@@ -14,6 +14,14 @@
         function confirmDeleteComment() {
             return confirm("Вы точно хотите удалить комментарий?");
         }
+        function validateComment() {
+            var commentary = document.querySelector('.comment_text').value.trim();
+            if (commentary === '') {
+                alert('Комментарий не может быть пустым или состоять только из пробелов.');
+                return false;
+            }
+            return true;
+        }
     </script>
 </head>
 <body>
@@ -33,7 +41,7 @@
                                 <p>Жанр: <span th:text = "${el.genre}"></span></p>
                                 <p>Автор: <span th:text = "${el.publisherName}"></span></p>
                                 <p>Дата создания публикации</p>
-                                <span th:text = "${el.date}"></span>
+                                <span th:text="${#temporals.format(el.date, 'dd.MM.yy HH:mm')}"></span>
                                 <p><a th:href ="${el.link}">Ссылка на источник</a></p>
 
                                 <a th:href="@{/book/details(id=${el.id},action='redact')}" th:if="${hasModificationRole}">Редактировать</a>
@@ -67,11 +75,14 @@
                         </div>
                         <div class="comments">
                         <h1>Комментарии</h1>
+                            <div class="comment" th:if="${#lists.isEmpty(comments)}" style="color: blue; font-size: 28;">
+                                Ещё никто не успел прокомментировать данную публикацию. Сделайте это первым!
+                            </div>
                         <div th:each="com : ${comments}" class="coms">
                             <ul th:if="${com.ban != True} and ${el.ban != True}" class="comment">
                                 <li>
                                     <h3 th:text = "${com.publisherName}" />
-                                    <p th:text = "${com.date}" />
+                                    <p th:text="${#temporals.format(com.date, 'dd.MM.yy HH:mm')}" />
                                     <div th:text = "${com.commentary}"></div>
                                     <form th:action="@{/book/details(id=${el.id},actionCom = ${com.id},action='removeCom')}" th:if="${hasModificationRole}" method="post">
                                         <button onclick="return confirmDeleteComment();" type="submit" class="comment_btn" >Удалить</button>
@@ -82,7 +93,7 @@
                         </div>
                         </div>
                         <div>
-                            <form th:action="@{/book/details(id=${el.id},action='addCom')}" method="post" class="comment_form">
+                            <form th:action="@{/book/details(id=${el.id},action='addCom')}" method="post" class="comment_form" onsubmit="return validateComment()">
                                 <h3>Оставьте свой комментарий к этой публикации!</h3>
                                 <textarea rows="4" cols="50" name="commentary" placeholder="Введите свой комментарий:" class="comment_text" minlength="1" maxlength="255" ></textarea>
                                 <button type="submit" class="comment_btn">Оставить</button>

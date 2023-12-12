@@ -7,6 +7,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../style.css">
   <title>Adding a book</title>
+  <script>
+    function validateForm() {
+        var title = document.getElementById('title').value.trim();
+        var genre = document.getElementById('genre').value.trim();
+        var link = document.getElementById('link').value.trim();
+        var description = document.getElementById('description').value.trim();
+
+        if (title === '' || genre === '' || link === '' || description === '') {
+            alert('Пожалуйста, заполните все поля.');
+            return false;
+        }
+
+        return true;
+    }
+  </script>
 </head>
 <body>
 <section class="content">
@@ -18,14 +33,14 @@
         <div th:if="${message}" class="book_add_error">
           <div th:text="${message}" style="color: red; font-size: 28px;" class="book_add_h1"></div>
         </div>
-        <form th:if="!${message}" action="/book/add" method="post" class="book_add_form">
+        <form th:if="!${message}" action="/book/add" method="post" class="book_add_form" onsubmit="return validateForm()">
           <div class="book_add_h1">
             <h1>Добавление книги в общую библиотеку</h1>
           </div>
-          <input type="text" name="title" placeholder="Введите название публикации" class="book_add_form_textarea" required>
-          <input type="text" name="genre" placeholder="Введите жанр публикации" class="book_add_form_textarea" required>
-          <input type="url" name="link" placeholder="Введите ссылку на источник публикации: https://example.com" class="book_add_form_textarea" pattern="https://.*" size="30" value="https://" required>
-          <textarea name="description" placeholder="Введите описание книги" class="book_add_form_textarea_description" minlength="100" maxlength="255" required></textarea>
+          <input type="text" id="title" name="title" placeholder="Введите название публикации" class="book_add_form_textarea" required>
+          <input type="text" id="genre" name="genre" placeholder="Введите жанр публикации" class="book_add_form_textarea" required>
+          <input type="url" id="link" name="link" placeholder="Введите ссылку на источник публикации: https://example.com" class="book_add_form_textarea" pattern="https://.*" size="30" value="https://" required>
+          <textarea id="description" name="description" placeholder="Введите описание книги" class="book_add_form_textarea_description" minlength="100" maxlength="255" required></textarea>
           <button type="submit" class="book_add_button">Добавить публикацию</button>
         </form>
       </div>

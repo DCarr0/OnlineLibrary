@@ -11,36 +11,29 @@
     <body>
         <header th:insert="blocks/header :: header"></header>
         <main>
-<section>
-            <div class="reg_div">
-                <h1 class="">Register a new account</h1>
-                <div th:if="${registrationError}" style="color: red;" class="book_add_h1">
-                    <p th:text="${registrationError}"></p>
-                </div>
-                <form action="/registration" th:action="@{/registration}" th:object="${userData}" method="post">
-                    <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
-                        <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+            <section>
+                <div class="reg_div">
+                    <h1 class="">Register a new account</h1>
+                    <div th:if="${registrationError}" style="color: red;" class="book_add_h1">
+                        <p th:text="${registrationError}"></p>
                     </div>
+                    <form action="/registration" th:action="@{/registration}" th:object="${userData}" method="post">
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+                            <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+                        </div>
 
-                    <div>
-                        <input type="text" class="auth_textarea"  th:field="*{name}" placeholder="Name" th:errorclass="is-invalid" required>
-                    </div>
+                        <div>
+                            <input type="text" class="auth_textarea"  th:field="*{name}" placeholder="Name" th:errorclass="is-invalid" required>
+                        </div>
 
-                    <div>
-                        <input type="email" class="auth_textarea" th:field="*{email}" placeholder="Email" th:errorclass="is-invalid" required>
-                    </div>
+                        <div>
+                            <input type="email" class="auth_textarea" th:field="*{email}" placeholder="Email" th:errorclass="is-invalid" required>
+                        </div>
 
-                    <div>
-                        <input type="password" class="auth_textarea" th:field="*{password}" placeholder="Password" th:errorclass="is-invalid" required>
-                    </div>
+                        <div>
+                            <input type="password" class="auth_textarea" th:field="*{password}" placeholder="Password" th:errorclass="is-invalid" required>
+                        </div>
 
-                    <div>
-                        <p><b>Хотите ли вы подать заявку на редактора?</b></p>
-                        <fieldset>
-                            <input name="yes" type="radio" value="true" class="" th:field="*{requestToRedactor}"> Да, я хочу быть редактором.
-                            <input name="no" type="radio" value="false" class="" th:field="*{requestToRedactor}"> Нет.
-                        </fieldset >
-                    </div>
                     <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" ></div>
                     <div><input type="submit" class="auth_button" value="Зарегистрироваться"/></div>
                 </form>
