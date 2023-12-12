@@ -239,21 +239,26 @@ footer p {
     margin-top: 15px;
 }
 .auth_div{
+    background-color: rgb(232 241 255);
+    box-shadow: 0 0 10px rgb(93 93 93 / 15%);
+    padding: 5px;
     width: 500px;
     margin: 0 auto;
     margin-top: 200px;
-    padding: 15px;
-    border: 3px solid rgb(182, 184, 188);
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+    
+}
+.auth_div button{
+    margin: 0 auto;
+    display: block;
 }
 .reg_div {
-width: 500px;
-height: 320px;
+width: 300px;
+height: 300px;
     margin: 0 auto;
     margin-top: 200px;
-    padding: 15px;
-    border: 3px solid rgb(182, 184, 188);
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+    background-color: rgb(232 241 255);
+    box-shadow: 0 0 10px rgb(93 93 93 / 15%);
+    padding: 5px;
 }
 .reg_div h1{
     text-align: center;
@@ -282,17 +287,19 @@ height: 320px;
     margin: 0 auto;
     margin-top: 5px;
     margin-bottom: 5px;
+    box-shadow: 0 0 15px rgb(18 26 33 / 15%);
+    border: none;
     height: 20px;
-    width: 350px;
+    width: 300px;
 }
 .auth_redirectToRegistration{
+    background-color: rgb(232 241 255);
+    box-shadow: 0 0 10px rgb(93 93 93 / 15%);
+    padding: 5px;
     width: 500px;
     height: 40px;
     margin: 0 auto;
     margin-top: 5px;
-    padding: 15px;
-    border: 3px solid rgb(182, 184, 188);
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
 }
 .book_add_form_textarea_description{
   resize: none;
@@ -381,7 +388,7 @@ margin-top: 170px;
     width: 100px;
     border: none;
     height: 25px;
-    background-color: rgb(217 228 245);
+    background-color: rgb(245 249 255);
     transition-duration: 1s;
     font-weight: 900;
     font-size: 16px;
@@ -467,7 +474,6 @@ margin-top: 170px;
 .comment button{
     display: block;
     margin-left: auto;
-    background-color: rgb(245 249 255);
 }
 .error_bookdetails{
     margin-top: 15px;
@@ -499,4 +505,23 @@ margin-top: 170px;
 header li{
     background-color: rgb(239 239 239);
     box-shadow: 0 0 10px rgb(93 93 93 / 15%);
+}
+
+.reg_btn{
+    position: absolute;
+    bottom: 380px;
+    margin-left: 50px;
+    display: block;
+    width: 200px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    border: none;
+    height: 25px;
+    background-color: rgb(245 249 255);
+    transition-duration: 1s;
+    font-weight: 900;
+    font-size: 16px;
+}
+.reg_btn:hover{
+    background-color: rgb(167, 184, 210);
+    transition-duration: 1s;
 }

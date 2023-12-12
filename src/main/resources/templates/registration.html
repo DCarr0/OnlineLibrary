@@ -14,10 +14,8 @@
             <section>
                 <div class="reg_div">
                     <h1 class="">Register a new account</h1>
-                    <div th:if="${registrationError}" style="color: red;" class="book_add_h1">
-                        <p th:text="${registrationError}"></p>
-                    </div>
-                    <form action="/registration" th:action="@{/registration}" th:object="${userData}" method="post">
+
+                    <form action="/registration" th:action="@{/registration}" th:object="${userData}" method="post" class="reg_form">
                         <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
                             <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
                         </div>
@@ -35,7 +33,10 @@
                         </div>
 
                     <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" ></div>
-                    <div><input type="submit" class="auth_button" value="Зарегистрироваться"/></div>
+                        <div th:if="${registrationError}" style="color: red;" class="book_add_h1">
+                            <p th:text="${registrationError}"></p>
+                        </div>
+                    <div class="reg_button"><input type="submit" class="reg_btn" value="Зарегистрироваться"/></div>
                 </form>
             </div>
 </section>
