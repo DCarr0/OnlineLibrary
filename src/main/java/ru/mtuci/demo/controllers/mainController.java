@@ -9,16 +9,60 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.mtuci.demo.exceptions.UserAlreadyExistException;
+import ru.mtuci.demo.models.Publication;
 import ru.mtuci.demo.models.UserData;
+import ru.mtuci.demo.repository.PublicationRepository;
 import ru.mtuci.demo.service.UserRegistrationService;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
+import static ru.mtuci.demo.service.PublicationService.distinctByKey;
 
 
 @Controller
 public class mainController {
 
+    @Autowired
+    private PublicationRepository publicationRepository;
+
+    @GetMapping("/")
+    public String welcome() {
+        return "../static/index.html";
+    }
+
+    @GetMapping("/main")
+    public String main(Model model) {
+        Iterable<Publication> publications = publicationRepository.findAll();
+        model.addAttribute("publications",publications);
+        return "main";
+    }
+
+    @PostMapping("/main")
+    public String searchPage(@RequestParam("searchString") String searchString, Model model) {
+        if (searchString != null) {
+            try {
+                List<Publication> searchResults = new ArrayList<>();
+
+                Iterable<Publication> search1 = publicationRepository.findByTitleContainingIgnoreCase(searchString);
+                search1.forEach(searchResults::add);
+
+                Iterable<Publication> search2 = publicationRepository.findByGenreContainingIgnoreCase(searchString);
+                search2.forEach(searchResults::add);
+
+                List<Publication> Results = searchResults.stream()
+                        .filter(distinctByKey(Publication::getId))
+                        .collect(Collectors.toList());
+                model.addAttribute("publications", Results);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return "main";
+    }
 
     @GetMapping("/autorisation")
     public String autorisation(@RequestParam(name="title", required=false, defaultValue="User") String name, Model model) {
