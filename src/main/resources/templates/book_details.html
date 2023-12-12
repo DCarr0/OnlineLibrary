@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -7,22 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style.css">
     <title>Publication description</title>
-    <script>
-        function confirmDeletePublication() {
-            return confirm("Вы точно хотите удалить публикацию?");
-        }
-        function confirmDeleteComment() {
-            return confirm("Вы точно хотите удалить комментарий?");
-        }
-        function validateComment() {
-            var commentary = document.querySelector('.comment_text').value.trim();
-            if (commentary === '') {
-                alert('Комментарий не может быть пустым или состоять только из пробелов.');
-                return false;
-            }
-            return true;
-        }
-    </script>
+    <script src="/scripts.js"></script>
 </head>
 <body>
 <section class="content">
