@@ -240,10 +240,11 @@ footer p {
 }
 .auth_div{
     background-color: rgb(232 241 255);
-    box-shadow: 0 0 10px rgb(93 93 93 / 15%);
-    padding: 5px;
+    box-shadow: 0 0 15px rgba(18, 26, 33, 0.15);
     width: 500px;
-    margin: 0 auto;
+    padding: 10px;
+    border: 1px solid rgb(182, 184, 188);
+    margin: 20px auto;
     margin-top: 200px;
     
 }
@@ -287,18 +288,20 @@ height: 300px;
     margin: 0 auto;
     margin-top: 5px;
     margin-bottom: 5px;
-    box-shadow: 0 0 15px rgb(18 26 33 / 15%);
+    box-shadow: 0 0 15px rgba(18,26,33,0.15);
     border: none;
     height: 20px;
-    width: 300px;
+    width: 80%;
+    padding: 8px;
 }
 .auth_redirectToRegistration{
     background-color: rgb(232 241 255);
-    box-shadow: 0 0 10px rgb(93 93 93 / 15%);
-    padding: 5px;
+    box-shadow: 0 0 15px rgba(93, 93, 93, 0.15);
+    border: 1px solid rgb(182, 184, 188);
     width: 500px;
     height: 40px;
-    margin: 0 auto;
+    padding: 10px;
+    margin: 10px auto;
     margin-top: 5px;
 }
 .book_add_form_textarea_description{
@@ -387,11 +390,12 @@ margin-top: 170px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
     width: 100px;
     border: none;
-    height: 25px;
+    height: 40px;
     background-color: rgb(245 249 255);
     transition-duration: 1s;
     font-weight: 900;
     font-size: 16px;
+    margin-top: 10px;
 }
 .comment_btn:hover{
     background-color: rgb(167, 184, 210);

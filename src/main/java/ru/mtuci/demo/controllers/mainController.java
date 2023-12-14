@@ -27,7 +27,10 @@ import static ru.mtuci.demo.service.PublicationService.distinctByKey;
 public class mainController {
 
     @Autowired
+    private UserRegistrationService userRegistrationService;
+    @Autowired
     private PublicationRepository publicationRepository;
+
 
     @GetMapping("/")
     public String welcome() {
@@ -68,9 +71,6 @@ public class mainController {
     public String autorisation(@RequestParam(name="title", required=false, defaultValue="User") String name, Model model) {
         return "autorisation";
     }
-
-    @Autowired
-    private UserRegistrationService userRegistrationService;
 
     @GetMapping("/registration")
     public String registration(@RequestParam(name="title", required=false, defaultValue="User") String name, Model model) {
