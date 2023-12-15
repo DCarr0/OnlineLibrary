@@ -101,14 +101,23 @@ public class userController {
         if(newRole != null) {
             User user = userRepository.findById(userId).orElseThrow();
             if (user.getRole().toString().equals(newRole)){
-                redirectAttributes.addFlashAttribute("errorMessege","Юзер уже имеет эту роль!!!");
+                redirectAttributes.addFlashAttribute("errorMessege","Пользователь уже имеет эту роль!!!");
                 return "redirect:/moderatorPanel";
             }
-            if (user.getRole().toString().equals("MODERATOR") || user.getRole().toString().equals("ADMIN")){
+            if (user.getRole().toString().equals("ADMIN") || user.getRole().toString().equals("MODERATOR")){
                 redirectAttributes.addFlashAttribute("errorMessege","Вы не имеете таких прав!!!");
                 return "redirect:/moderatorPanel";
             }
             user.setRole(UserRole.valueOf(newRole));
+            userRepository.save(user);
+        }
+        else if (userId != null) {
+            User user = userRepository.findById(userId).orElseThrow();
+            if (user.getRole().toString().equals("ADMIN") || user.getRole().toString().equals("MODERATOR")){
+                redirectAttributes.addFlashAttribute("errorMessege","Вы не имеете таких прав!!!");
+                return "redirect:/moderatorPanel";
+            }
+            user.setBan(!user.getBan());
             userRepository.save(user);
         }
 
@@ -137,7 +146,11 @@ public class userController {
         if(newRole != null) {
             User user = userRepository.findById(userId).orElseThrow();
             if (user.getRole().toString().equals(newRole)){
-                redirectAttributes.addFlashAttribute("errorMessege","Юзер уже имеет эту роль!!!");
+                redirectAttributes.addFlashAttribute("errorMessege","Пользователь уже имеет эту роль!!!");
+                return "redirect:/adminPanel";
+            }
+            if (user.getRole().toString().equals("ADMIN")){
+                redirectAttributes.addFlashAttribute("errorMessege","Вы не имеете таких прав!!!");
                 return "redirect:/adminPanel";
             }
             user.setRole(UserRole.valueOf(newRole));
@@ -145,6 +158,10 @@ public class userController {
         }
         else if (userId != null) {
             User user = userRepository.findById(userId).orElseThrow();
+            if (user.getRole().toString().equals("ADMIN")){
+                redirectAttributes.addFlashAttribute("errorMessege","Вы не имеете таких прав!!!");
+                return "redirect:/adminPanel";
+            }
             user.setBan(!user.getBan());
             userRepository.save(user);
         } else if (publicationId != null) {

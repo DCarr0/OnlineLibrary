@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Личный кабинет</title>
+    <title>Personal account</title>
 </head>
 
 <body>
@@ -17,36 +17,36 @@
             <div class="user_info">
                 <div th:each="el : ${user}" class="user">
                     <ul class="user_head">
-                        <li>
+                        <li style="bold">
                             <h1> Добро пожаловать! </h1>
                             <h3 th:text="${el.name}" style="text-decoration: underline;"></h3>
-                            <p> Ваша почта: <span th:text="${el.email}"></span></p>
-                            <p> Вы зарегистрировались на нашем сайте: <span th:text="${#temporals.format(el.date, 'dd.MM.yy HH:mm:ss')}"></span></p>
-                            <p> Вы имеете роль: <span th:text="${el.role}"></span>
-                <div class="moderator-panel" th:if="${isModerator}">
-                    <a th:href="@{/moderatorPanel}">Панель управления</a>
-                </div>
-                <div class="admin-panel" th:if="${isAdmin}">
-                    <a th:href="@{/adminPanel}">Панель управления</a>
-                </div></p>
+                            <p style="font-size: 19px; margin-bottom: 5px;"> Ваша почта: <span th:text="${el.email}" style="font-weight: bold;"></span></p>
+                            <p style="font-size: 19px; margin-bottom: 5px;"> Вы зарегистрировались на нашем сайте: <span style="font-weight: bold;" th:text="${#temporals.format(el.date, 'dd.MM.yy HH:mm:ss')}"></span></p>
+                            <p style="font-size: 19px; margin-bottom: 5px;"> Вы имеете роль: <span style="font-weight: bold;" th:text="${el.role}"></span></p>
+                            <div class="moderator-panel" th:if="${isModerator}">
+                                <a th:href="@{/moderatorPanel}">Панель управления</a>
+                            </div>
+                            <div class="admin-panel" th:if="${isAdmin}">
+                                <a th:href="@{/adminPanel}">Панель управления</a>
+                            </div>
                         </li>
-
                     </ul>
 
                     <form th:action="@{/user}" method="post" class="red_req">
                         <input type="hidden" name="userId" th:value="${el.id}" />
                         <h3>Вы хотите подать заявку на редактора?</h3>
-                        <select name="requestToRedactor">
+                        <select class="selectUser" name="requestToRedactor">
                             <option th:value="true">Да</option>
                             <option th:value="false">Нет</option>
                         </select>
                         <button type="submit" class="user_btn">Подать заявку</button>
+
+                        <div th:if="${errorMessege}" th:text="${errorMessege}" style="color: red; font-size: 28; margin-top: 10px;"></div>
+                        <div th:if="${messege}" th:text="${messege}" style="color: green; font-size: 28;  margin-top: 10px;"></div>
                     </form>
-                    <div th:if="${errorMessege}" th:text="${errorMessege}" style="color: red; font-size: 28;"></div>
-                    <div th:if="${messege}" th:text="${messege}" style="color: green; font-size: 28;"></div>
                     <div class="publications_info_head">
-                        <h2>Оценённые публикации</h2>
-                        <div th:if="${#lists.isEmpty(publications)}" style="color: blue; font-size: 28;">
+                        <h2>Оценённые публикации:</h2>
+                        <div th:if="${#lists.isEmpty(publications)}" class="book_rate_error">
                             Вы ещё не оценили ни одной публикации!
                         </div>
                     <div class="publications_info">

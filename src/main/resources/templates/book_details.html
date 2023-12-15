@@ -37,18 +37,10 @@
                         </ul>
                         <div class="rate">
                             <h3>Рейтинг </h3>
-                            <p style="
-    font-size: 40px;
-">-1</p>
-                            <span th:if="${el.rate == 0}">
-                                Нейтральный статус!
-                            </span>
-                            <span th:if="${el.rate > 0}">
-                                Положительный статус!
-                            </span>
-                            <span th:if="${el.rate < 0}">
-                                Отрицательный статус!
-                            </span>
+                            <p style="font-size: 40px; color: #3498db;" th:text="${el.rate}"></p>
+                            <span th:if="${el.rate == 0}" style="color: #7f8c8d; font-weight: bold;">Нейтральный статус!</span>
+                            <span th:if="${el.rate > 0}" style="color: #27ae60; font-weight: bold;">Положительный статус!</span>
+                            <span th:if="${el.rate < 0}" style="color: #e74c3c; font-weight: bold;">Отрицательный статус!</span>
                             <form th:action="@{/book/details(id=${el.id},action='addRate')}" method="post">
                                 <button type="submit" value="1" name="rate" class="comment_btn1">Нравится</button>
                                 <button type="submit" value="-1" name="rate" class="comment_btn2">Не нравится</button>
