@@ -16,10 +16,9 @@
     <section>
       <div class="main_left">
         <div th:each="el : ${publication}" class="redact_add_div">
-          <div class="book_add_h1">
-            <h1>Редактирование публикации</h1>
-          </div>
+
           <form method="post" class="book_add_form" onsubmit="return validateForm()">
+            <h1>Редактирование публикации</h1>
             <input type="text" id="title" name="title" placeholder="Введите название публикации" class="book_add_form_textarea" th:value="${el.title}" required>
             <input type="text" id="genre" name="genre" placeholder="Введите жанр публикации" class="book_add_form_textarea" th:value="${el.genre}" required>
             <input type="url" id="link" name="link" placeholder="Введите ссылку на источник публикации: https://example.com" class="book_add_form_textarea" pattern="https://.*" size="30" value="https://" th:value="${el.link}" required>

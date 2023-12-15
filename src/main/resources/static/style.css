@@ -30,7 +30,6 @@ header li {
 }
 .content{
     height: 100%;
-    min-height:900px;
 }
 a {
     text-decoration: none;
@@ -54,7 +53,7 @@ main section{
     max-width: 1920px;
     margin: 0 auto;
     display: flex;
-    min-height: calc(100vh - 107px);
+    min-height: calc(100vh - 110px);
     height: 100%;
 }
 .text_area_1 {
@@ -253,13 +252,14 @@ footer p {
     display: block;
 }
 .reg_div {
-width: 300px;
-height: 300px;
+    width: 500px;
+    height: 305px;
     margin: 0 auto;
     margin-top: 200px;
     background-color: rgb(232 241 255);
-    box-shadow: 0 0 10px rgb(93 93 93 / 15%);
+    box-shadow: 0 0 15px rgba(18, 26, 33, 0.15);
     padding: 5px;
+    border: 1px solid rgb(182, 184, 188);
 }
 .reg_div h1{
     text-align: center;
@@ -284,15 +284,15 @@ height: 300px;
 
 }
 .auth_textarea{
-    display: block;
-    margin: 0 auto;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    box-shadow: 0 0 15px rgba(18,26,33,0.15);
-    border: none;
-    height: 20px;
-    width: 80%;
-    padding: 8px;
+    width: 480px;
+        display: block;
+        margin: 0 auto;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        box-shadow: 0 0 15px rgba(18,26,33,0.15);
+        border: none;
+        height: 20px;
+        padding: 8px;
 }
 .auth_redirectToRegistration{
     background-color: rgb(232 241 255);
@@ -512,20 +512,19 @@ header li{
 }
 
 .reg_btn{
-    position: absolute;
-    bottom: 380px;
-    margin-left: 50px;
+    margin: 0 auto;
     display: block;
     width: 200px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
     border: none;
-    height: 25px;
+    height: 40px;
     background-color: rgb(245 249 255);
     transition-duration: 1s;
     font-weight: 900;
     font-size: 16px;
 }
 .reg_btn:hover{
+    width: 220px;
     background-color: rgb(167, 184, 210);
     transition-duration: 1s;
 }
