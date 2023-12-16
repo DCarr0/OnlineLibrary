@@ -11,15 +11,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.mtuci.demo.models.Publication;
 import ru.mtuci.demo.models.User;
-import ru.mtuci.demo.models.UserRate;
 import ru.mtuci.demo.models.UserRole;
 import ru.mtuci.demo.repository.PublicationRepository;
-import ru.mtuci.demo.repository.UserRateRepository;
 import ru.mtuci.demo.repository.UserRepository;
+import ru.mtuci.demo.service.PublicationService;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Controller
@@ -32,7 +29,7 @@ public class userController {
     private UserRepository userRepository;
 
     @Autowired
-    private UserRateRepository userRateRepository;
+    private PublicationService publicationService;
 
     @GetMapping("/user")
     public String userGet(Model model) {
@@ -45,18 +42,9 @@ public class userController {
         model.addAttribute("isAdmin", isAdmin);
 
         var id = userRepository.findUserByEmail(user.getUsername()).getId();
-        Iterable<UserRate> userRates = userRateRepository.findByUserId(id);
 
-        List<Publication> publications = new ArrayList<>();
+        List<Publication> publications = publicationService.findRatedPublicationsByUserId(id);
 
-        for (UserRate userRate : userRates) {
-            Optional<Publication> publicationOptional = publicationRepository.findById(userRate.getPublicationId());
-
-            if (publicationOptional.isPresent()) {
-                Publication publication = publicationOptional.get();
-                publications.add(publication);
-            }
-        }
         model.addAttribute("publications", publications);
 
         return "user_template";

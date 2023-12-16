@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.UUID;
 
 
@@ -28,8 +29,16 @@ public class Publication {
     private String link;
     private String description;
     private Integer rate;
+    @ElementCollection
+    private Set<UUID> whoLiked;
 
+    public Set<UUID> getWhoLiked() {
+        return whoLiked;
+    }
 
+    public void setWhoLiked(Set<UUID> whoLiked) {
+        this.whoLiked = whoLiked;
+    }
 
     public String getDescription() {
         return description;

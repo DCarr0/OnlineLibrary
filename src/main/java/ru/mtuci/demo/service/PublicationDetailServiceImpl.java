@@ -6,8 +6,10 @@ import ru.mtuci.demo.details.PublicationDto;
 import ru.mtuci.demo.models.Publication;
 import ru.mtuci.demo.repository.PublicationRepository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -19,15 +21,6 @@ public class PublicationDetailServiceImpl implements PublicationService {
     public Optional<Publication> findOne(UUID id){
         return publicationRepository.findById(id);
     }
-
-//    @Override
-//    public Iterable<Publication> findByTitleContainingIgnoreCase(String title) throws Exception {
-//        Iterable<Publication> searchResult = publicationRepository.findByTitleContainingIgnoreCase(title);
-//        if(searchResult != null){
-//            throw new Exception("Пост не найден");
-//        }
-//        return searchResult;
-//    }
 
     @Override
     public PublicationDto addPublication(PublicationDto publicationDto){
@@ -51,5 +44,15 @@ public class PublicationDetailServiceImpl implements PublicationService {
         savedPublicationDto.setDescription(savedPublication.getDescription());
 
         return savedPublicationDto;
+    }
+
+    @Override
+    public List<Publication> findRatedPublicationsByUserId(UUID userId) {
+
+        List<Publication> allPublications = publicationRepository.findAll();
+
+        return allPublications.stream()
+                .filter(publication -> publication.getWhoLiked() != null && publication.getWhoLiked().contains(userId))
+                .collect(Collectors.toList());
     }
 }

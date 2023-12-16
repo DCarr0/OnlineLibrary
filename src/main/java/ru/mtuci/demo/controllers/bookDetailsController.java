@@ -11,14 +11,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.mtuci.demo.models.Comment;
 import ru.mtuci.demo.models.Publication;
-import ru.mtuci.demo.models.UserRate;
 import ru.mtuci.demo.repository.CommentRepository;
 import ru.mtuci.demo.repository.PublicationRepository;
-import ru.mtuci.demo.repository.UserRateRepository;
 import ru.mtuci.demo.repository.UserRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Controller
@@ -32,9 +31,6 @@ public class bookDetailsController {
 
     @Autowired
     private CommentRepository commentRepository;
-
-    @Autowired
-    private UserRateRepository userRateRepository;
 
     @GetMapping("/book/details")
     public String bookDetails(@RequestParam(name="id", required=false, defaultValue="") UUID id,
@@ -115,18 +111,17 @@ public class bookDetailsController {
         if ("addRate".equals(action)){
             var userId = userRepository.findUserByEmail(user.getUsername()).getId();
 
-            Iterable<UserRate> userRates = userRateRepository.findByUserId(userId);
-            for (UserRate userrate:userRates) {
-                if (userrate.getPublicationId().equals(id)){
-                    redirectAttributes.addFlashAttribute("message", "Вы уже ставили оценку!");
-                    return "redirect:/book/details?id=" + id.toString();
-                }
+            Set<UUID> whoLiked = publication.getWhoLiked();
+
+            if (whoLiked.contains(userId)) {
+                redirectAttributes.addFlashAttribute("message", "Вы уже ставили оценку!");
+                return "redirect:/book/details?id=" + id.toString();
             }
 
-            UserRate userRate = new UserRate(userId,id);
-            userRateRepository.save(userRate);
+            whoLiked.add(userId);
 
             publication.setRate(publication.getRate() + rate);
+            publication.setWhoLiked(whoLiked);
             publicationRepository.save(publication);
         }
 
