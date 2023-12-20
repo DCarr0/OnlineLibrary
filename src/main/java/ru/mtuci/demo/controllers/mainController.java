@@ -1,6 +1,8 @@
 package ru.mtuci.demo.controllers;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import jakarta.validation.Valid;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +15,11 @@ import ru.mtuci.demo.models.Publication;
 import ru.mtuci.demo.models.UserData;
 import ru.mtuci.demo.repository.PublicationRepository;
 import ru.mtuci.demo.service.UserRegistrationService;
-
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -46,6 +52,7 @@ public class mainController {
 
     @PostMapping("/main")
     public String searchPage(@RequestParam("searchString") String searchString, Model model) {
+
         if (searchString != null) {
             try {
                 List<Publication> searchResults = new ArrayList<>();
@@ -79,7 +86,20 @@ public class mainController {
     }
 
     @PostMapping("/registration")
-    public String userRegistration(final @Valid UserData userData, final BindingResult bindingResult, final Model model){
+    public String userRegistration(final @Valid UserData userData, final BindingResult bindingResult, final Model model,@RequestParam("g-recaptcha-response") String captchaResponse) throws IOException, InterruptedException {
+        String captchaSecret = "6LclkTcpAAAAAOOIa0Xlpz8sbvrmJFLUzhdUK6d7";
+        final String captchaURL = "https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s";
+        String url = String.format(captchaURL,captchaSecret,captchaResponse);
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .POST(HttpRequest.BodyPublishers.ofString("id=10"))
+                .build();
+        HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+        JSONObject jsonObject = new JSONObject(response.body().toString());
+        if (jsonObject.getBoolean("success")==true){
         String password = userData.getPassword();
         Pattern uppercasePattern = Pattern.compile("[A-Z]");
         Matcher uppercaseMatcher = uppercasePattern.matcher(password);
@@ -95,5 +115,8 @@ public class mainController {
             return "registration";
         }
         return "redirect:/main";
+        }
+        model.addAttribute("registrationError", "Ошибка с капчей");
+        return "registration";
     }
 }

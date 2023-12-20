@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <title>Registration</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://www.google.com/recaptcha/api.js?hl=ru" type="text/javascript"></script>
-
+    <script src="https://www.google.com/recaptcha/api.js"></script>
 </head>
 <section class="content">
     <body>
@@ -32,7 +31,7 @@
                             <input type="password" class="auth_textarea" th:field="*{password}" placeholder="Password" th:errorclass="is-invalid" required>
                         </div>
 
-                    <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" ></div>
+                        <div class="g-recaptcha" data-sitekey="6LclkTcpAAAAAPsjIG3Oqjy5hcpsNRNPujvfXIpq"></div>
                         <div th:if="${registrationError}" style="color: red;" class="book_add_h1">
                             <p th:text="${registrationError}"></p>
                         </div>
