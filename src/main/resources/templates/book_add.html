@@ -19,7 +19,7 @@
         <div th:if="${message}" class="book_add_error">
           <div th:text="${message}" style="color: red; font-size: 28px;" class="book_add_h1"></div>
         </div>
-        <form th:if="!${message}" action="/book/add" method="post" class="book_add_form" onsubmit="return validateForm()">
+        <form th:if="!${message}" th:action="@{/book/add}" method="post" class="book_add_form" onsubmit="return validateForm()">
           <div class="book_add_h1">
             <h1>Добавление книги в общую библиотеку</h1>
           </div>
