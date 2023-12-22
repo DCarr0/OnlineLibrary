@@ -81,7 +81,7 @@
                 <td th:text="${el.genre}"></td>
                 <td th:text="${el.publisherName}"></td>
                 <td th:text="${#temporals.format(el.date, 'dd.MM.yy HH:mm:ss')}"></td>
-                <td><a th:text="${el.link}"></a></td>
+                <td class="admPanelLink"><a th:text="${el.link}"></a></td>
                 <td th:text="${el.rate}"></td>
                 <td th:text="${el.ban ? 'Заблокирован' : 'Опубликован'}"></td>
                 <td>
