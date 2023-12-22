@@ -624,3 +624,8 @@ header li{
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
             transform: scale(1.1);
         }
+        .error-message {
+            color: red;
+            font-weight: bold;
+            margin-top: 10px;
+        }

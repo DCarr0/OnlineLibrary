@@ -1,6 +1,5 @@
 package ru.mtuci.demo.controllers;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import jakarta.validation.Valid;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,7 @@ import ru.mtuci.demo.models.Publication;
 import ru.mtuci.demo.models.UserData;
 import ru.mtuci.demo.repository.PublicationRepository;
 import ru.mtuci.demo.service.UserRegistrationService;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -75,10 +75,10 @@ public class mainController {
     }
 
     @GetMapping("/autorisation")
-    public String autorisation(@RequestParam(name="title", required=false, defaultValue="User") String name, Model model) {
+    public String autorisation(Model model){
+
         return "autorisation";
     }
-
     @GetMapping("/registration")
     public String registration(@RequestParam(name="title", required=false, defaultValue="User") String name, Model model) {
         model.addAttribute("userData", new UserData());
@@ -92,31 +92,34 @@ public class mainController {
         String url = String.format(captchaURL,captchaSecret,captchaResponse);
 
         HttpClient client = HttpClient.newHttpClient();
+
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .POST(HttpRequest.BodyPublishers.ofString("id=10"))
                 .build();
         HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response.body());
-        JSONObject jsonObject = new JSONObject(response.body().toString());
-        if (jsonObject.getBoolean("success")==true){
-        String password = userData.getPassword();
-        Pattern uppercasePattern = Pattern.compile("[A-Z]");
-        Matcher uppercaseMatcher = uppercasePattern.matcher(password);
-        if (password.length() < 8 || !uppercaseMatcher.find()) {
-            model.addAttribute("registrationError", "Пароль должен быть длиной не менее 8 символов и соддержать символы верхнего и нижнего регистра!");
-            return "registration";
-        }
 
-        try {
-            userRegistrationService.registration(userData);
-        }catch (UserAlreadyExistException e){
-            model.addAttribute("registrationError", "Учетная запись для этого адреса электронной почты уже существует.");
-            return "registration";
+        JSONObject jsonObject = new JSONObject(response.body().toString());
+        if (jsonObject.getBoolean("success")){
+            String password = userData.getPassword();
+            Pattern uppercasePattern = Pattern.compile("[A-Z]");
+            Matcher uppercaseMatcher = uppercasePattern.matcher(password);
+            Pattern digitPattern = Pattern.compile("\\d");
+            Matcher digitMatcher = digitPattern.matcher(password);
+            if (password.length() < 8 || !uppercaseMatcher.find() || !digitMatcher.find()) {
+                model.addAttribute("registrationError", "Пароль должен быть не менее 8 символов и содержать хотя бы одну заглавную букву и цифру!");
+                return "registration";
+            }
+
+            try {
+                userRegistrationService.registration(userData);
+            }catch (UserAlreadyExistException e){
+                model.addAttribute("registrationError", "Учетная запись для этого адреса электронной почты уже существует.");
+                return "registration";
+            }
+            return "redirect:/main";
         }
-        return "redirect:/main";
-        }
-        model.addAttribute("registrationError", "Ошибка с капчей");
+        model.addAttribute("registrationError", "Пройдите капчу!");
         return "registration";
     }
 }
